@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta
+    name="description"
+    content="Mathematics Behind Physics-Informed Neural Networks (PINNs), materi Muhammad Luthfi Shahab dalam International Lecture Series in Mathematics & Statistics (ILMS 2026)."
+  >
+  <title>Materi PINNs | PINNsWEB</title>
+
+  <link rel="preload" href="assets/images/nn.png" as="image">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/script.js" defer></script>
+</head>
+
+<body class="pinns-web page-materials" data-page="materi">
+  <a class="skip-link" href="#main-content">Langsung ke konten utama</a>
+
+  <!-- Background utama yang juga digunakan pada halaman lainnya. -->
+  <div class="site-background" aria-hidden="true">
+    <div class="ocean-gradient"></div>
+    <img
+      class="site-background-image neural-background"
+      src="assets/images/nn.png"
+      alt=""
+      width="1366"
+      height="768"
+      fetchpriority="high"
+      decoding="async"
+    >
+  </div>
+
+  <header class="site-header" id="site-header">
+    <div class="header-container">
+      <button
+        class="nav-toggle"
+        id="nav-toggle"
+        type="button"
+        aria-label="Buka menu utama"
+        aria-controls="primary-navigation"
+        aria-expanded="false"
+      >
+        <span class="nav-toggle-line" aria-hidden="true"></span>
+        <span class="nav-toggle-line" aria-hidden="true"></span>
+        <span class="nav-toggle-line" aria-hidden="true"></span>
+      </button>
+
+      <nav
+        class="primary-navigation"
+        id="primary-navigation"
+        aria-label="Menu utama"
+      >
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              href="index.html"
+              data-page-target="beranda"
+            >BERANDA</a>
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link is-active"
+              href="materi.html"
+              data-page-target="materi"
+              aria-current="page"
+            >MATERI PINNs</a>
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              href="latihan.html"
+              data-page-target="latihan"
+            >LATIHAN</a>
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              href="reference.html"
+              data-page-target="referensi"
+            >REFERENSI</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main
+    class="materials-main page-main"
+    id="main-content"
+    tabindex="-1"
+    data-material-viewer
+    data-initial-topic="topic-feedforward"
+  >
+    <div class="container materials-container">
+      <h1 class="visually-hidden" id="materi-title">Materi PINNs</h1>
+
+      <!--
+        JavaScript akan menampilkan kontrol ini dan satu topik yang dipilih.
+        Seluruh materi tetap dapat dibaca ketika JavaScript tidak tersedia.
+      -->
+      <div class="material-controls" data-material-controls hidden>
+        <label class="material-selector-label" for="material-selector">Pilih materi</label>
+
+        <select
+          class="material-selector"
+          id="material-selector"
+          name="material-topic"
+          aria-controls="material-topics"
+          data-material-selector
+        >
+          <option value="topic-feedforward" selected>Feedforward Neural Networks</option>
+          <option value="topic-differential">Differential Equations</option>
+          <option value="topic-forward">PINNs Forward Problems</option>
+          <option value="topic-inverse">PINNs Inverse Problems</option>
+        </select>
+      </div>
+
+      <div class="material-topics" id="material-topics">
+
+        <!-- Feedforward Neural Networks -->
+        <article
+          class="material-topic"
+          id="topic-feedforward"
+          aria-labelledby="topic-feedforward-title"
+          tabindex="-1"
+          data-material-topic
+          lang="en"
+        >
+          <h2 class="material-topic-title" id="topic-feedforward-title">Feedforward Neural Networks</h2>
+
+          <!-- Satu kotak putih untuk seluruh isi topik. -->
+          <div class="material-card material-content">
+
+            <section
+              class="material-subsection"
+              id="composite-function"
+              aria-labelledby="composite-function-title"
+            >
+              <h3 class="material-subheading" id="composite-function-title">Composite function</h3>
+
+              <ul class="material-list">
+                <li>A composite function is a function formed by applying one function to the output of another function.</li>
+                <li>
+                  Let <var>f</var>(<var>x</var>) = <var>x</var><sup>2</sup> and <var>g</var>(<var>x</var>) = <var>x</var> + 1, then the composite function
+                  <p class="equation"><var>y</var> = (<var>f</var> ∘ <var>g</var>)(<var>x</var>) = <var>f</var>(<var>g</var>(<var>x</var>)) = (<var>x</var> + 1)<sup>2</sup></p>
+                </li>
+                <li>
+                  More compositions:
+                  <p class="equation"><var>x</var> → <var>f</var><sub>1</sub>(<var>x</var>) → <var>f</var><sub>2</sub>(<var>f</var><sub>1</sub>(<var>x</var>)) → <var>f</var><sub>3</sub>(<var>f</var><sub>2</sub>(<var>f</var><sub>1</sub>(<var>x</var>)))</p>
+                </li>
+              </ul>
+            </section>
+
+            <section
+              class="material-subsection"
+              id="feedforward-networks"
+              aria-labelledby="feedforward-networks-title"
+            >
+              <h3 class="material-subheading" id="feedforward-networks-title">Feedforward neural networks</h3>
+
+              <ul class="material-list">
+                <li>A feedforward neural network is a composite function of multiple variables, consisting of many linear and nonlinear functions.</li>
+                <li><var>w</var>: weight, <var>b</var>: bias.</li>
+                <li>Sometimes, all of them are called weights or trainable parameters.</li>
+                <li>Feedforward neural network = multilayer perceptron.</li>
+                <li>Feedforward neural network = fully connected network.</li>
+              </ul>
+            </section>
+
+            <section
+              class="material-subsection"
+              id="layer-wise-computation"
+              aria-labelledby="layer-wise-computation-title"
+            >
+              <h3 class="material-subheading" id="layer-wise-computation-title">Layer-wise computation</h3>
+
+              <ul class="material-list">
+                <li>
+                  Instead of computing
+                  <p class="equation"><var>y</var> = <var>f</var>(<var>w</var><sub>5</sub><var>f</var>(<var>w</var><sub>1</sub><var>x</var><sub>1</sub> + <var>w</var><sub>2</sub><var>x</var><sub>2</sub> + <var>b</var><sub>1</sub>) + <var>w</var><sub>6</sub><var>f</var>(<var>w</var><sub>3</sub><var>x</var><sub>1</sub> + <var>w</var><sub>4</sub><var>x</var><sub>2</sub> + <var>b</var><sub>2</sub>) + <var>b</var><sub>3</sub>)</p>
+                </li>
+                <li>
+                  The above equation can be written as
+                  <div class="equation-group">
+                    <p class="equation"><var>h</var><sub>1</sub> = <var>f</var>(<var>w</var><sub>1</sub><var>x</var><sub>1</sub> + <var>w</var><sub>2</sub><var>x</var><sub>2</sub> + <var>b</var><sub>1</sub>)</p>
+                    <p class="equation"><var>h</var><sub>2</sub> = <var>f</var>(<var>w</var><sub>3</sub><var>x</var><sub>1</sub> + <var>w</var><sub>4</sub><var>x</var><sub>2</sub> + <var>b</var><sub>2</sub>)</p>
+                    <p class="equation"><var>y</var> = <var>f</var>(<var>w</var><sub>5</sub><var>h</var><sub>1</sub> + <var>w</var><sub>6</sub><var>h</var><sub>2</sub> + <var>b</var><sub>3</sub>)</p>
+                  </div>
+                  <p>which is a neural network with one hidden layer containing two neurons (or nodes).</p>
+                </li>
+              </ul>
+            </section>
+
+            <section
+              class="material-subsection"
+              id="matrix-vector-computations"
+              aria-labelledby="matrix-vector-computations-title"
+            >
+              <h3 class="material-subheading" id="matrix-vector-computations-title">Matrix and vector computations are faster</h3>
+
+              <div class="equation-group">
+                <p class="equation"><var>h</var><sub>1</sub> = <var>f</var>(<var>w</var><sub>1</sub><var>x</var><sub>1</sub> + <var>w</var><sub>2</sub><var>x</var><sub>2</sub> + <var>b</var><sub>1</sub>)</p>
+                <p class="equation"><var>h</var><sub>2</sub> = <var>f</var>(<var>w</var><sub>3</sub><var>x</var><sub>1</sub> + <var>w</var><sub>4</sub><var>x</var><sub>2</sub> + <var>b</var><sub>2</sub>)</p>
+                <p class="equation"><var>y</var> = <var>f</var>(<var>w</var><sub>5</sub><var>h</var><sub>1</sub> + <var>w</var><sub>6</sub><var>h</var><sub>2</sub> + <var>b</var><sub>3</sub>)</p>
+              </div>
+
+              <ul class="material-list">
+                <li>
+                  It can be written as
+
+                  <math class="equation" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+                    <mrow>
+                      <msub><mi>H</mi><mn>1</mn></msub>
+                      <mo>=</mo>
+                      <mo>[</mo>
+                      <mtable>
+                        <mtr><mtd><msub><mi>h</mi><mn>1</mn></msub></mtd></mtr>
+                        <mtr><mtd><msub><mi>h</mi><mn>2</mn></msub></mtd></mtr>
+                      </mtable>
+                      <mo>]</mo>
+                      <mo>=</mo>
+                      <mi>f</mi><mo>(</mo>
+                      <mo>[</mo>
+                      <mtable>
+                        <mtr>
+                          <mtd><msub><mi>w</mi><mn>1</mn></msub></mtd>
+                          <mtd><msub><mi>w</mi><mn>2</mn></msub></mtd>
+                        </mtr>
+                        <mtr>
+                          <mtd><msub><mi>w</mi><mn>3</mn></msub></mtd>
+                          <mtd><msub><mi>w</mi><mn>4</mn></msub></mtd>
+                        </mtr>
+                      </mtable>
+                      <mo>]</mo>
+                      <mo>[</mo>
+                      <mtable>
+                        <mtr><mtd><msub><mi>x</mi><mn>1</mn></msub></mtd></mtr>
+                        <mtr><mtd><msub><mi>x</mi><mn>2</mn></msub></mtd></mtr>
+                      </mtable>
+                      <mo>]</mo>
+                      <mo>+</mo>
+                      <mo>[</mo>
+                      <mtable>
+                        <mtr><mtd><msub><mi>b</mi><mn>1</mn></msub></mtd></mtr>
+                        <mtr><mtd><msub><mi>b</mi><mn>2</mn></msub></mtd></mtr>
+                      </mtable>
+                      <mo>]</mo><mo>)</mo>
+                      <mo>=</mo>
+                      <mi>f</mi><mo>(</mo>
+                      <msub><mi>W</mi><mn>1</mn></msub>
+                      <mi>X</mi><mo>+</mo>
+                      <msub><mi>B</mi><mn>1</mn></msub>
+                      <mo>)</mo>
+                    </mrow>
+                  </math>
+
+                  <math class="equation" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+                    <mrow>
+                      <mi>y</mi><mo>=</mo>
+                      <mi>f</mi><mo>(</mo>
+                      <mo>[</mo>
+                      <msub><mi>w</mi><mn>5</mn></msub>
+                      <mspace width="1em"/>
+                      <msub><mi>w</mi><mn>6</mn></msub>
+                      <mo>]</mo>
+                      <mo>[</mo>
+                      <mtable>
+                        <mtr><mtd><msub><mi>h</mi><mn>1</mn></msub></mtd></mtr>
+                        <mtr><mtd><msub><mi>h</mi><mn>2</mn></msub></mtd></mtr>
+                      </mtable>
+                      <mo>]</mo>
+                      <mo>+</mo>
+                      <msub><mi>b</mi><mn>3</mn></msub>
+                      <mo>)</mo><mo>=</mo>
+                      <mi>f</mi><mo>(</mo>
+                      <msub><mi>W</mi><mn>2</mn></msub>
+                      <msub><mi>H</mi><mn>1</mn></msub>
+                      <mo>+</mo>
+                      <msub><mi>B</mi><mn>2</mn></msub>
+                      <mo>)</mo>
+                    </mrow>
+                  </math>
+                </li>
+
+                <li>
+                  Or
+
+                  <math class="equation" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+                    <mrow>
+                      <msub><mi>H</mi><mn>1</mn></msub>
+                      <mo>=</mo><mo>[</mo>
+                      <msub><mi>h</mi><mn>1</mn></msub>
+                      <mspace width="1em"/>
+                      <msub><mi>h</mi><mn>2</mn></msub>
+                      <mo>]</mo><mo>=</mo>
+                      <mi>f</mi><mo>(</mo>
+                      <mo>[</mo>
+                      <msub><mi>x</mi><mn>1</mn></msub>
+                      <mspace width="1em"/>
+                      <msub><mi>x</mi><mn>2</mn></msub>
+                      <mo>]</mo><mo>[</mo>
+                      <mtable>
+                        <mtr>
+                          <mtd><msub><mi>w</mi><mn>1</mn></msub></mtd>
+                          <mtd><msub><mi>w</mi><mn>3</mn></msub></mtd>
+                        </mtr>
+                        <mtr>
+                          <mtd><msub><mi>w</mi><mn>2</mn></msub></mtd>
+                          <mtd><msub><mi>w</mi><mn>4</mn></msub></mtd>
+                        </mtr>
+                      </mtable>
+                      <mo>]</mo><mo>+</mo><mo>[</mo>
+                      <msub><mi>b</mi><mn>1</mn></msub>
+                      <mspace width="1em"/>
+                      <msub><mi>b</mi><mn>2</mn></msub>
+                      <mo>]</mo><mo>)</mo><mo>=</mo>
+                      <mi>f</mi><mo>(</mo>
+                      <mi>X</mi>
+                      <msub><mi>W</mi><mn>1</mn></msub>
+                      <mo>+</mo>
+                      <msub><mi>B</mi><mn>1</mn></msub>
+                      <mo>)</mo>
+                    </mrow>
+                  </math>
+
+                  <math class="equation" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+                    <mrow>
+                      <mi>y</mi><mo>=</mo>
+                      <mi>f</mi><mo>(</mo>
+                      <mo>[</mo>
+                      <msub><mi>h</mi><mn>1</mn></msub>
+                      <mspace width="1em"/>
+                      <msub><mi>h</mi><mn>2</mn></msub>
+                      <mo>]</mo><mo>[</mo>
+                      <mtable>
+                        <mtr><mtd><msub><mi>w</mi><mn>5</mn></msub></mtd></mtr>
+                        <mtr><mtd><msub><mi>w</mi><mn>6</mn></msub></mtd></mtr>
+                      </mtable>
+                      <mo>]</mo><mo>+</mo>
+                      <msub><mi>b</mi><mn>3</mn></msub>
+                      <mo>)</mo><mo>=</mo>
+                      <mi>f</mi><mo>(</mo>
+                      <msub><mi>H</mi><mn>1</mn></msub>
+                      <msub><mi>W</mi><mn>2</mn></msub>
+                      <mo>+</mo>
+                      <msub><mi>B</mi><mn>2</mn></msub>
+                      <mo>)</mo>
+                    </mrow>
+                  </math>
+                </li>
+              </ul>
+            </section>
+
+            <section
+              class="material-subsection"
+              id="hidden-layers"
+              aria-labelledby="hidden-layers-title"
+            >
+              <h3 class="material-subheading" id="hidden-layers-title">Adding more hidden layers</h3>
+
+              <div class="material-columns">
+                <div class="material-text">
+                  <ul class="material-list">
+                    <li>
+                      A feedforward neural network with 2 inputs, 4 hidden layers each containing 20 nodes, and 1 output:
+                      <div class="equation-group">
+                        <p class="equation"><var>X</var> = [<var>x</var>&nbsp; <var>y</var>]</p>
+                        <p class="equation"><var>H</var><sub>1</sub> = <var>f</var>(<var>XW</var><sub>1</sub> + <var>B</var><sub>1</sub>)</p>
+                        <p class="equation"><var>H</var><sub>2</sub> = <var>f</var>(<var>H</var><sub>1</sub><var>W</var><sub>2</sub> + <var>B</var><sub>2</sub>)</p>
+                        <p class="equation"><var>H</var><sub>3</sub> = <var>f</var>(<var>H</var><sub>2</sub><var>W</var><sub>3</sub> + <var>B</var><sub>3</sub>)</p>
+                        <p class="equation"><var>H</var><sub>4</sub> = <var>f</var>(<var>H</var><sub>3</sub><var>W</var><sub>4</sub> + <var>B</var><sub>4</sub>)</p>
+                        <p class="equation"><var>u</var> = <var>f</var>(<var>H</var><sub>4</sub><var>W</var><sub>5</sub> + <var>B</var><sub>5</sub>)</p>
+                      </div>
+                    </li>
+                    <li><var>W</var><sub>1</sub> is a 2 × 20 matrix.</li>
+                    <li>Sizes of the other weight and bias matrices?</li>
+                    <li>Also valid for vector inputs <var>x</var> and <var>y</var>.</li>
+                  </ul>
+                </div>
+
+                <figure class="source-diagram neural-network-diagram">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 640 460"
+                    role="img"
+                    aria-labelledby="feedforward-network-title"
+                  >
+                    <title id="feedforward-network-title">A feedforward neural network with 2 inputs, 4 hidden layers each containing 20 nodes, and 1 output</title>
+
+                    <g class="network-connections" fill="none" stroke="currentColor" stroke-width="1">
+                      <path d="M50 180L150 60M50 180L150 140M50 180L125 220M50 180L150 300M50 180L150 380M50 260L150 60M50 260L150 140M50 260L125 220M50 260L150 300M50 260L150 380"/>
+                      <path d="M175 60L225 60M175 60L225 140M175 60L245 220M175 60L225 300M175 60L225 380M175 140L225 60M175 140L225 140M175 140L245 220M175 140L225 300M175 140L225 380M175 300L225 60M175 300L225 140M175 300L245 220M175 300L225 300M175 300L225 380M175 380L225 60M175 380L225 140M175 380L245 220M175 380L225 300M175 380L225 380M175 60L175 220L225 60M175 140L175 220L225 140M175 300L175 220L225 300M175 380L175 220L225 380"/>
+                      <path d="M275 60L325 60M275 60L325 140M275 60L345 220M275 60L325 300M275 60L325 380M275 140L325 60M275 140L325 140M275 140L345 220M275 140L325 300M275 140L325 380M275 300L325 60M275 300L325 140M275 300L345 220M275 300L325 300M275 300L325 380M275 380L325 60M275 380L325 140M275 380L345 220M275 380L325 300M275 380L325 380M275 60L275 220L325 60M275 140L275 220L325 140M275 300L275 220L325 300M275 380L275 220L325 380"/>
+                      <path d="M375 60L425 60M375 60L425 140M375 60L445 220M375 60L425 300M375 60L425 380M375 140L425 60M375 140L425 140M375 140L445 220M375 140L425 300M375 140L425 380M375 300L425 60M375 300L425 140M375 300L445 220M375 300L425 300M375 300L425 380M375 380L425 60M375 380L425 140M375 380L445 220M375 380L425 300M375 380L425 380M375 60L375 220L425 60M375 140L375 220L425 140M375 300L375 220L425 300M375 380L375 220L425 380"/>
+                      <path d="M475 60L550 220M475 140L550 220M475 300L550 220M475 380L550 220M475 220L550 220"/>
+                    </g>
+
+                    <g class="network-input-output" fill="#ccffcc" stroke="#66ff66">
+                      <circle cx="50" cy="180" r="23"/>
+                      <circle cx="50" cy="260" r="23"/>
+                      <circle cx="570" cy="220" r="23"/>
+                    </g>
+
+                    <g class="network-hidden-nodes" fill="#d2ccff" stroke="#9999ff">
+                      <circle cx="150" cy="60" r="25"/>
+                      <circle cx="150" cy="140" r="25"/>
+                      <circle cx="150" cy="300" r="25"/>
+                      <circle cx="150" cy="380" r="25"/>
+                      <circle cx="250" cy="60" r="25"/>
+                      <circle cx="250" cy="140" r="25"/>
+                      <circle cx="250" cy="300" r="25"/>
+                      <circle cx="250" cy="380" r="25"/>
+                      <circle cx="350" cy="60" r="25"/>
+                      <circle cx="350" cy="140" r="25"/>
+                      <circle cx="350" cy="300" r="25"/>
+                      <circle cx="350" cy="380" r="25"/>
+                      <circle cx="450" cy="60" r="25"/>
+                      <circle cx="450" cy="140" r="25"/>
+                      <circle cx="450" cy="300" r="25"/>
+                      <circle cx="450" cy="380" r="25"/>
+                    </g>
+
+                    <g class="network-labels" fill="currentColor" text-anchor="middle" font-family="serif" font-size="22">
+                      <text x="50" y="186">x</text>
+                      <text x="50" y="266">y</text>
+                      <text x="570" y="227">u</text>
+
+                      <text x="150" y="22">H<tspan dy="6" font-size="15">1</tspan></text>
+                      <text x="250" y="22">H<tspan dy="6" font-size="15">2</tspan></text>
+                      <text x="350" y="22">H<tspan dy="6" font-size="15">3</tspan></text>
+                      <text x="450" y="22">H<tspan dy="6" font-size="15">4</tspan></text>
+
+                      <text x="145" y="66">h<tspan x="156" y="74" font-size="14">1</tspan><tspan x="156" y="57" font-size="14">1</tspan></text>
+                      <text x="145" y="146">h<tspan x="156" y="154" font-size="14">2</tspan><tspan x="156" y="137" font-size="14">1</tspan></text>
+                      <text x="150" y="226">⋮</text>
+                      <text x="145" y="306">h<tspan x="156" y="314" font-size="14">19</tspan><tspan x="156" y="297" font-size="14">1</tspan></text>
+                      <text x="145" y="386">h<tspan x="156" y="394" font-size="14">20</tspan><tspan x="156" y="377" font-size="14">1</tspan></text>
+
+                      <text x="245" y="66">h<tspan x="256" y="74" font-size="14">1</tspan><tspan x="256" y="57" font-size="14">2</tspan></text>
+                      <text x="245" y="146">h<tspan x="256" y="154" font-size="14">2</tspan><tspan x="256" y="137" font-size="14">2</tspan></text>
+                      <text x="250" y="226">⋮</text>
+                      <text x="245" y="306">h<tspan x="256" y="314" font-size="14">19</tspan><tspan x="256" y="297" font-size="14">2</tspan></text>
+                      <text x="245" y="386">h<tspan x="256" y="394" font-size="14">20</tspan><tspan x="256" y="377" font-size="14">2</tspan></text>
+
+                      <text x="345" y="66">h<tspan x="356" y="74" font-size="14">1</tspan><tspan x="356" y="57" font-size="14">3</tspan></text>
+                      <text x="345" y="146">h<tspan x="356" y="154" font-size="14">2</tspan><tspan x="356" y="137" font-size="14">3</tspan></text>
+                      <text x="350" y="226">⋮</text>
+                      <text x="345" y="306">h<tspan x="356" y="314" font-size="14">19</tspan><tspan x="356" y="297" font-size="14">3</tspan></text>
+                      <text x="345" y="386">h<tspan x="356" y="394" font-size="14">20</tspan><tspan x="356" y="377" font-size="14">3</tspan></text>
+
+                      <text x="445" y="66">h<tspan x="456" y="74" font-size="14">1</tspan><tspan x="456" y="57" font-size="14">4</tspan></text>
+                      <text x="445" y="146">h<tspan x="456" y="154" font-size="14">2</tspan><tspan x="456" y="137" font-size="14">4</tspan></text>
+                      <text x="450" y="226">⋮</text>
+                      <text x="445" y="306">h<tspan x="456" y="314" font-size="14">19</tspan><tspan x="456" y="297" font-size="14">4</tspan></text>
+                      <text x="445" y="386">h<tspan x="456" y="394" font-size="14">20</tspan><tspan x="456" y="377" font-size="14">4</tspan></text>
+                    </g>
+                  </svg>
+
+                  <figcaption class="equation"><var>H</var><sub>1</sub> = [<var>h</var><sub>1</sub><sup>1</sup>&nbsp; <var>h</var><sub>2</sub><sup>1</sup>&nbsp; ⋯&nbsp; <var>h</var><sub>20</sub><sup>1</sup>]</figcaption>
+                </figure>
+              </div>
+            </section>
+
+          </div>
+        </article>
+
+        <!-- Differential Equations -->
+        <article
+          class="material-topic"
+          id="topic-differential"
+          aria-labelledby="topic-differential-title"
+          tabindex="-1"
+          data-material-topic
+          lang="en"
+        >
+          <h2 class="material-topic-title" id="topic-differential-title">Differential Equations</h2>
+
+          <div class="material-card material-content">
+
+            <section
+              class="material-subsection"
+              id="differential-equations"
+              aria-labelledby="differential-equations-title"
+            >
+              <h3 class="material-subheading" id="differential-equations-title">Differential equations</h3>
+
+              <ul class="material-list">
+                <li>
+                  Ordinary differential equation (ODE). The one-dimensional Bratu equation:
+                  <div class="equation-group">
+                    <p class="equation"><var>u</var><sub><var>xx</var></sub> + <var>C</var><var>e</var><sup><var>u</var></sup> = 0,&nbsp; <var>x</var> ∈ [0, 1]</p>
+                    <p class="equation"><var>u</var>(0) = 0,&nbsp; <var>u</var>(1) = 0</p>
+                  </div>
+                </li>
+
+                <li>The objective is to approximate the solution <var>u</var>(<var>x</var>) across the domain.</li>
+
+                <li>
+                  Partial differential equation (PDE). The Burgers equation:
+
+                  <math class="equation" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+                    <mrow>
+                      <msub><mi>u</mi><mi>t</mi></msub>
+                      <mo>+</mo>
+                      <mi>u</mi>
+                      <msub><mi>u</mi><mi>x</mi></msub>
+                      <mo>−</mo>
+                      <mfrac><mn>0.01</mn><mi>π</mi></mfrac>
+                      <msub><mi>u</mi><mi>xx</mi></msub>
+                      <mo>=</mo><mn>0</mn><mo>,</mo>
+                      <mspace width="1em"/>
+                      <mi>x</mi><mo>∈</mo>
+                      <mo>[</mo><mo>−</mo><mn>1</mn><mo>,</mo><mn>1</mn><mo>]</mo><mo>,</mo>
+                      <mspace width="1em"/>
+                      <mi>t</mi><mo>∈</mo>
+                      <mo>[</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo>]</mo><mo>,</mo>
+                    </mrow>
+                  </math>
+
+                  <p class="equation"><var>u</var>(<var>x</var>, 0) = − sin(π<var>x</var>),</p>
+                  <p class="equation"><var>u</var>(−1, <var>t</var>) = <var>u</var>(1, <var>t</var>) = 0.</p>
+                </li>
+
+                <li>The objective is to approximate the solution <var>u</var>(<var>x</var>, <var>t</var>) across the domain.</li>
+              </ul>
+            </section>
+
+            <section
+              class="material-subsection"
+              id="common-solvers"
+              aria-labelledby="common-solvers-title"
+            >
+              <h3 class="material-subheading" id="common-solvers-title">Common solvers/methods</h3>
+
+              <ul class="material-list">
+                <li>
+                  Time-independent differential equations, <var>u</var>(<var>x</var>), <var>u</var>(<var>x</var>, <var>y</var>):
+                  <ul class="material-list">
+                    <li>Finite difference method</li>
+                    <li>Finite element method</li>
+                    <li>Spectral method</li>
+                  </ul>
+                </li>
+
+                <li>
+                  Time-dependent differential equations, <var>u</var>(<var>x</var>, <var>t</var>): time integration + spatial derivative/discretization
+                  <ul class="material-list">
+                    <li>
+                      Time integration:
+                      <ul class="material-list">
+                        <li>Euler method</li>
+                        <li>Runge–Kutta method</li>
+                        <li>ode45 (MATLAB)</li>
+                      </ul>
+                    </li>
+                    <li>
+                      Spatial derivative/discretization:
+                      <ul class="material-list">
+                        <li>Finite difference method</li>
+                        <li>Finite element method</li>
+                        <li>Spectral method</li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </section>
+
+          </div>
+        </article>
+
+        <!-- PINNs Forward Problems -->
+        <article
+          class="material-topic"
+          id="topic-forward"
+          aria-labelledby="topic-forward-title"
+          tabindex="-1"
+          data-material-topic
+          lang="en"
+        >
+          <h2 class="material-topic-title" id="topic-forward-title">Physics-Informed Neural Networks (PINNs) - Forward Problems</h2>
+
+          <div class="material-card material-content">
+
+            <section
+              class="material-subsection"
+              id="pinns-definition"
+              aria-labelledby="pinns-definition-title"
+            >
+              <h3 class="material-subheading" id="pinns-definition-title">Physics-Informed Neural Networks (PINNs)</h3>
+
+              <ul class="material-list">
+                <li>PINNs: using a feedforward neural network to approximate the solutions of differential equations.</li>
+                <li>
+                  The Burgers equation:
+                  <div class="equation-group">
+                    <p class="equation">u<sub>t</sub> + uu<sub>x</sub> − (0.01/π)u<sub>xx</sub> = 0, &nbsp; x ∈ [−1, 1], &nbsp; t ∈ [0, 1],</p>
+                    <p class="equation">u(x, 0) = −sin(πx),</p>
+                    <p class="equation">u(−1, t) = u(1, t) = 0.</p>
+                  </div>
+                </li>
+                <li>
+                  The solution is approximated by a <strong>continuous</strong> neural network function with two hidden layers
+                  <p class="equation">u(x, t, W) = σ(σ([x t]W<sub>1</sub> + B<sub>1</sub>)W<sub>2</sub> + B<sub>2</sub>)W<sub>3</sub> + B<sub>3</sub>,</p>
+                </li>
+                <li>Unknowns: the weights <var>W</var>.</li>
+              </ul>
+            </section>
+
+            <section
+              class="material-subsection"
+              id="collocation-loss"
+              aria-labelledby="collocation-loss-title"
+            >
+              <h3 class="material-subheading" id="collocation-loss-title">Collocation points and loss function</h3>
+
+              <ul class="material-list">
+                <li>Choose some random/grid interior points: {x<sub>k</sub><sup>i</sup>, t<sub>k</sub><sup>i</sup>}, k = 1, ..., n<sub>i</sub>.</li>
+                <li>Choose some random/grid boundary/initial points: {x<sub>k</sub><sup>b</sup>, t<sub>k</sub><sup>b</sup>}, k = 1, ..., n<sub>b</sub>.</li>
+                <li>
+                  Loss function:
+                  <p class="equation">L(W) = MSE<sub>i</sub> + MSE<sub>b</sub></p>
+                  <p>where the PDE residual is</p>
+                  <p class="equation">MSE<sub>i</sub> = (1/n<sub>i</sub>) ∑<sub>k=1</sub><sup>n<sub>i</sub></sup> (u<sub>t</sub>(x<sub>k</sub><sup>i</sup>, t<sub>k</sub><sup>i</sup>, W) + u(x<sub>k</sub><sup>i</sup>, t<sub>k</sub><sup>i</sup>, W)u<sub>x</sub>(x<sub>k</sub><sup>i</sup>, t<sub>k</sub><sup>i</sup>, W) − (0.01/π)u<sub>xx</sub>(x<sub>k</sub><sup>i</sup>, t<sub>k</sub><sup>i</sup>, W))<sup>2</sup></p>
+                  <p>and the boundary/initial residual is</p>
+                  <p class="equation">MSE<sub>b</sub> = (1/n<sub>b</sub>) ∑<sub>k=1</sub><sup>n<sub>b</sub></sup> (u(x<sub>k</sub><sup>b</sup>, t<sub>k</sub><sup>b</sup>, W) − u<sub>true</sub>(x<sub>k</sub><sup>b</sup>, t<sub>k</sub><sup>b</sup>))<sup>2</sup></p>
+                </li>
+              </ul>
+            </section>
+
+            <section
+              class="material-subsection"
+              id="pinns-derivatives"
+              aria-labelledby="pinns-derivatives-title"
+            >
+              <h3 class="material-subheading" id="pinns-derivatives-title">Derivatives with respect to <var>x</var> and <var>t</var></h3>
+
+              <p class="equation">u(x, t, W) = σ(σ([x t]W<sub>1</sub> + B<sub>1</sub>)W<sub>2</sub> + B<sub>2</sub>)W<sub>3</sub> + B<sub>3</sub>,</p>
+
+              <figure class="material-diagram">
+                <svg
+                  class="chain-rule-diagram"
+                  viewBox="0 0 1380 690"
+                  xmlns="http://www.w3.org/2000/svg"
+                  role="img"
+                  aria-labelledby="chain-rule-title chain-rule-description"
+                >
+                  <title id="chain-rule-title">Rewriting the neural network operations. Chain rule.</title>
+                  <desc id="chain-rule-description">Network operations and their first derivatives with respect to t and x, and second derivatives with respect to x.</desc>
+
+                  <defs>
+                    <marker
+                      id="chain-arrow"
+                      markerWidth="8"
+                      markerHeight="8"
+                      refX="7"
+                      refY="4"
+                      orient="auto"
+                    >
+                      <path d="M0 0 L8 4 L0 8Z" fill="currentColor"/>
+                    </marker>
+                  </defs>
+
+                  <g stroke="currentColor" fill="none" stroke-width="2" marker-end="url(#chain-arrow)">
+                    <path d="M420 15 L530 75"/>
+                    <path d="M390 250 L300 480"/>
+                    <path d="M695 250 L970 125"/>
+                    <path d="M695 250 L850 475"/>
+                    <path d="M1120 270 L1120 320"/>
+                  </g>
+
+                  <g fill="#ffffcd">
+                    <rect x="390" y="80" width="305" height="330"/>
+                    <rect x="15" y="320" width="285" height="330"/>
+                    <rect x="970" y="0" width="290" height="270"/>
+                    <rect x="850" y="320" width="515" height="330"/>
+                  </g>
+
+                  <g fill="currentColor" font-family="serif" font-size="32">
+                    <text x="75" y="70" font-family="sans-serif">Rewriting the neural</text>
+                    <text x="75" y="110" font-family="sans-serif">network operations.</text>
+
+                    <text x="320" y="365">∂ₜ</text>
+                    <text x="820" y="170">∂ₓ</text>
+                    <text x="760" y="370">∂ₓₓ</text>
+
+                    <text x="480" y="530" font-family="sans-serif">Chain rule.</text>
+
+                    <text x="410" y="125">X = [x t],</text>
+                    <text x="410" y="178">h₁ = XW₁ + B₁,</text>
+                    <text x="410" y="230">H₁ = σ(h₁),</text>
+                    <text x="410" y="283">h₂ = H₁W₂ + B₂,</text>
+                    <text x="410" y="336">H₂ = σ(h₂),</text>
+                    <text x="410" y="390">u = H₂W₃ + B₃.</text>
+
+                    <text x="30" y="360">Xₜ = [0 1],</text>
+                    <text x="30" y="413">h₁,ₜ = XₜW₁,</text>
+                    <text x="30" y="466">H₁,ₜ = σ′(h₁) · h₁,ₜ,</text>
+                    <text x="30" y="519">h₂,ₜ = H₁,ₜW₂,</text>
+                    <text x="30" y="572">H₂,ₜ = σ′(h₂) · h₂,ₜ,</text>
+                    <text x="30" y="625">uₜ = H₂,ₜW₃.</text>
+
+                    <text x="985" y="40">Xₓ = [1 0],</text>
+                    <text x="985" y="85">h₁,ₓ = XₓW₁,</text>
+                    <text x="985" y="130">H₁,ₓ = σ′(h₁) · h₁,ₓ,</text>
+                    <text x="985" y="175">h₂,ₓ = H₁,ₓW₂,</text>
+                    <text x="985" y="220">H₂,ₓ = σ′(h₂) · h₂,ₓ,</text>
+                    <text x="985" y="260">uₓ = H₂,ₓW₃.</text>
+
+                    <text x="865" y="360">Xₓₓ = [0 0],</text>
+                    <text x="865" y="413">h₁,ₓₓ = XₓₓW₁,</text>
+                    <text x="865" y="466" textLength="485" lengthAdjust="spacingAndGlyphs">H₁,ₓₓ = σ″(h₁) · h₁,ₓ² + σ′(h₁) · h₁,ₓₓ,</text>
+                    <text x="865" y="519">h₂,ₓₓ = H₁,ₓₓW₂,</text>
+                    <text x="865" y="572" textLength="485" lengthAdjust="spacingAndGlyphs">H₂,ₓₓ = σ″(h₂) · h₂,ₓ² + σ′(h₂) · h₂,ₓₓ,</text>
+                    <text x="865" y="625">uₓₓ = H₂,ₓₓW₃.</text>
+                  </g>
+                </svg>
+              </figure>
+            </section>
+
+            <section
+              class="material-subsection"
+              id="pinns-architecture"
+              aria-labelledby="pinns-architecture-title"
+            >
+              <h3 class="material-subheading" id="pinns-architecture-title">Architecture of PINNs</h3>
+
+              <figure class="material-diagram">
+                <svg
+                  class="pinns-architecture"
+                  viewBox="0 0 1400 680"
+                  xmlns="http://www.w3.org/2000/svg"
+                  role="img"
+                  aria-labelledby="pinns-architecture-diagram-title pinns-architecture-description"
+                >
+                  <title id="pinns-architecture-diagram-title">Architecture of PINNs</title>
+                  <desc id="pinns-architecture-description">Four connected paths compute u, u_t, u_x, and u_xx. Their outputs enter f = u_t + N(u), followed by L or F.</desc>
+
+                  <defs>
+                    <marker
+                      id="architecture-arrow"
+                      markerWidth="7"
+                      markerHeight="7"
+                      refX="6"
+                      refY="3.5"
+                      orient="auto"
+                    >
+                      <path d="M0 0 L7 3.5 L0 7Z" fill="#555"/>
+                    </marker>
+                  </defs>
+
+                  <rect x="35" y="185" width="1080" height="135" rx="10" fill="#fffbd5" stroke="#ffeb8a"/>
+
+                  <g fill="none" stroke="#555" stroke-width="1.5" marker-end="url(#architecture-arrow)">
+                    <path d="M98 35 L180 72 M98 105 L180 78 M98 216 L180 252 M98 286 L180 258 M98 396 L180 432 M98 466 L180 438 M98 576 L180 612 M98 646 L180 618"/>
+                    <path d="M98 216 Q160 126 98 35 M98 286 Q160 195 98 105 M98 216 Q165 308 98 396 M98 286 Q165 378 98 466 M98 216 Q170 430 98 576 M98 286 Q170 501 98 646"/>
+                    <path d="M245 75 H325 M390 75 H470 M535 75 H615 M680 75 H760 M825 75 H905 M970 75 H1050"/>
+                    <path d="M245 255 H325 M390 255 H470 M535 255 H615 M680 255 H760 M825 255 H905 M970 255 H1050"/>
+                    <path d="M245 435 H325 M390 435 H470 M535 435 H615 M680 435 H760 M825 435 H905 M970 435 H1050"/>
+                    <path d="M245 615 H325 M390 615 H470 M535 615 H615 M680 615 H760 M825 615 H905 M970 615 H1050"/>
+                    <path d="M390 255 L470 75 M390 255 L470 435 M390 255 L470 615 M390 435 L470 615"/>
+                    <path d="M680 255 L760 75 M680 255 L760 435 M680 255 L760 615 M680 435 L760 615"/>
+                    <path d="M970 255 L1050 75 M970 255 L1050 435 M970 255 L1050 615 M970 435 L1050 615"/>
+                    <path d="M1115 75 L1185 255 M1115 255 H1185 M1115 435 L1185 255 M1115 615 L1185 255 M1275 287 V397"/>
+                  </g>
+
+                  <g fill="#ceffc6" stroke="#89ff7b" stroke-width="1.5">
+                    <circle cx="70" cy="35" r="29"/>
+                    <circle cx="70" cy="105" r="29"/>
+                    <circle cx="70" cy="216" r="29"/>
+                    <circle cx="70" cy="286" r="29"/>
+                    <circle cx="70" cy="396" r="29"/>
+                    <circle cx="70" cy="466" r="29"/>
+                    <circle cx="70" cy="576" r="29"/>
+                    <circle cx="70" cy="646" r="29"/>
+
+                    <circle cx="212" cy="75" r="33"/>
+                    <circle cx="357" cy="75" r="33"/>
+                    <circle cx="502" cy="75" r="33"/>
+                    <circle cx="647" cy="75" r="33"/>
+                    <circle cx="792" cy="75" r="33"/>
+                    <circle cx="937" cy="75" r="33"/>
+                    <circle cx="1082" cy="75" r="33"/>
+
+                    <circle cx="212" cy="255" r="33"/>
+                    <circle cx="357" cy="255" r="33"/>
+                    <circle cx="502" cy="255" r="33"/>
+                    <circle cx="647" cy="255" r="33"/>
+                    <circle cx="792" cy="255" r="33"/>
+                    <circle cx="937" cy="255" r="33"/>
+                    <circle cx="1082" cy="255" r="33"/>
+
+                    <circle cx="212" cy="435" r="33"/>
+                    <circle cx="357" cy="435" r="33"/>
+                    <circle cx="502" cy="435" r="33"/>
+                    <circle cx="647" cy="435" r="33"/>
+                    <circle cx="792" cy="435" r="33"/>
+                    <circle cx="937" cy="435" r="33"/>
+                    <circle cx="1082" cy="435" r="33"/>
+
+                    <circle cx="212" cy="615" r="33"/>
+                    <circle cx="357" cy="615" r="33"/>
+                    <circle cx="502" cy="615" r="33"/>
+                    <circle cx="647" cy="615" r="33"/>
+                    <circle cx="792" cy="615" r="33"/>
+                    <circle cx="937" cy="615" r="33"/>
+                    <circle cx="1082" cy="615" r="33"/>
+
+                    <rect x="1185" y="222" width="180" height="65" rx="10"/>
+                    <rect x="1220" y="397" width="110" height="65" rx="10"/>
+                  </g>
+
+                  <g fill="currentColor" font-family="serif" font-size="25" text-anchor="middle">
+                    <text x="70" y="43">0</text>
+                    <text x="70" y="113">1</text>
+                    <text x="70" y="224">x</text>
+                    <text x="70" y="294">t</text>
+                    <text x="70" y="404">1</text>
+                    <text x="70" y="474">0</text>
+                    <text x="70" y="584">0</text>
+                    <text x="70" y="654">0</text>
+
+                    <text x="212" y="83">Xₜ</text>
+                    <text x="357" y="83">h₁,ₜ</text>
+                    <text x="502" y="83">H₁,ₜ</text>
+                    <text x="647" y="83">h₂,ₜ</text>
+                    <text x="792" y="83">H₂,ₜ</text>
+                    <text x="937" y="83">ũₜ</text>
+                    <text x="1082" y="83">uₜ</text>
+
+                    <text x="212" y="263">X</text>
+                    <text x="357" y="263">h₁</text>
+                    <text x="502" y="263">H₁</text>
+                    <text x="647" y="263">h₂</text>
+                    <text x="792" y="263">H₂</text>
+                    <text x="937" y="263">ũ</text>
+                    <text x="1082" y="263">u</text>
+
+                    <text x="212" y="443">Xₓ</text>
+                    <text x="357" y="443">h₁,ₓ</text>
+                    <text x="502" y="443">H₁,ₓ</text>
+                    <text x="647" y="443">h₂,ₓ</text>
+                    <text x="792" y="443">H₂,ₓ</text>
+                    <text x="937" y="443">ũₓ</text>
+                    <text x="1082" y="443">uₓ</text>
+
+                    <text x="212" y="623">Xₓₓ</text>
+                    <text x="357" y="623">h₁,ₓₓ</text>
+                    <text x="502" y="623">H₁,ₓₓ</text>
+                    <text x="647" y="623">h₂,ₓₓ</text>
+                    <text x="792" y="623">H₂,ₓₓ</text>
+                    <text x="937" y="623">ũₓₓ</text>
+                    <text x="1082" y="623">uₓₓ</text>
+
+                    <text x="285" y="60">W₁</text>
+                    <text x="430" y="60">σ</text>
+                    <text x="575" y="60">W₂</text>
+                    <text x="720" y="60">σ</text>
+                    <text x="865" y="60">W₃</text>
+                    <text x="1010" y="60">p</text>
+
+                    <text x="285" y="240">W₁</text>
+                    <text x="285" y="280">B₁</text>
+                    <text x="430" y="240">σ</text>
+                    <text x="575" y="240">W₂</text>
+                    <text x="575" y="280">B₂</text>
+                    <text x="720" y="240">σ</text>
+                    <text x="865" y="240">W₃</text>
+                    <text x="865" y="280">B₃</text>
+                    <text x="1010" y="240">p</text>
+                    <text x="1010" y="280">q</text>
+
+                    <text x="285" y="420">W₁</text>
+                    <text x="430" y="420">σ</text>
+                    <text x="575" y="420">W₂</text>
+                    <text x="720" y="420">σ</text>
+                    <text x="865" y="420">W₃</text>
+                    <text x="1010" y="420">p</text>
+                    <text x="1035" y="462">qₓ</text>
+
+                    <text x="285" y="600">W₁</text>
+                    <text x="430" y="600">σ</text>
+                    <text x="575" y="600">W₂</text>
+                    <text x="720" y="600">σ</text>
+                    <text x="865" y="600">W₃</text>
+                    <text x="1010" y="600">p</text>
+                    <text x="1010" y="642">qₓₓ</text>
+
+                    <text x="451" y="166">σ′</text>
+                    <text x="451" y="349">σ′</text>
+                    <text x="405" y="543">σ′</text>
+                    <text x="466" y="543">σ″</text>
+
+                    <text x="741" y="166">σ′</text>
+                    <text x="741" y="349">σ′</text>
+                    <text x="695" y="543">σ′</text>
+                    <text x="756" y="543">σ″</text>
+
+                    <text x="1035" y="165">pₜ</text>
+                    <text x="1035" y="350">pₓ</text>
+                    <text x="990" y="535">pₓ</text>
+                    <text x="1050" y="535">pₓₓ</text>
+
+                    <text x="1275" y="263">f = uₜ + 𝒩(u)</text>
+                    <text x="1275" y="439">L or F</text>
+                  </g>
+                </svg>
+              </figure>
+            </section>
+
+            <section
+              class="material-subsection"
+              id="pinns-advantages"
+              aria-labelledby="pinns-advantages-title"
+            >
+              <h3 class="material-subheading" id="pinns-advantages-title">Advantages of PINNs</h3>
+
+              <ul class="material-list">
+                <li>Mesh (or grid)-free</li>
+                <li>Efficient inverse problems (or parameter estimation)</li>
+                <li>Automatic differentiation</li>
+                <li>Unified framework: ODEs, 2D PDEs, 3D PDEs</li>
+                <li>
+                  Hard constraint: enforce the initial and boundary conditions directly into the network structure
+                  <p class="equation">u(x, t, W) = ũ(x, t, W) · p(x, t) + q(x),</p>
+                </li>
+              </ul>
+            </section>
+
+          </div>
+        </article>
+
+        <!-- PINNs Inverse Problems -->
+        <article
+          class="material-topic"
+          id="topic-inverse"
+          aria-labelledby="topic-inverse-title"
+          tabindex="-1"
+          data-material-topic
+          lang="en"
+        >
+          <h2 class="material-topic-title" id="topic-inverse-title">Physics-Informed Neural Networks (PINNs) - Inverse Problems</h2>
+
+          <div class="material-card material-content">
+            <!--
+              Seluruh isi Inverse Problems dalam PDF berupa Example,
+              Code, dan Result; semuanya ditempatkan di latihan.html.
+              Tidak ada materi teori tambahan yang dibuat.
+            -->
+            <a
+              class="button material-exercise-link"
+              href="latihan.html#latihan-inverse"
+              lang="id"
+            >Buka Latihan PINNs Inverse Problems</a>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- Navigasi antartopik disambungkan pada tahap pembuatan script.js. -->
+      <nav
+        class="material-pagination"
+        aria-label="Navigasi materi"
+        data-material-controls
+        hidden
+      >
+        <button
+          class="button button--previous"
+          type="button"
+          data-action="previous-topic"
+          disabled
+        >Sebelumnya</button>
+
+        <a class="button button--exercise" href="latihan.html">Buka Latihan</a>
+
+        <button
+          class="button button--next"
+          type="button"
+          data-action="next-topic"
+        >Berikutnya</button>
+      </nav>
+    </div>
+  </main>
+</body>
+</html>

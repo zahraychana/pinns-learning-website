@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta
+    name="description"
+    content="Mathematics Behind Physics-Informed Neural Networks (PINNs), materi Muhammad Luthfi Shahab dalam International Lecture Series in Mathematics & Statistics (ILMS 2026)."
+  >
+  <title>Beranda | PINNsWEB</title>
+
+  <link rel="preload" href="assets/images/nn.png" as="image">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/script.js" defer></script>
+</head>
+
+<body class="pinns-web page-home" data-page="beranda">
+  <a class="skip-link" href="#main-content">Langsung ke konten utama</a>
+
+  <!-- Background utama yang juga digunakan pada halaman lainnya. -->
+  <div class="site-background" aria-hidden="true">
+    <div class="ocean-gradient"></div>
+    <img
+      class="site-background-image neural-background"
+      src="assets/images/nn.png"
+      alt=""
+      width="1366"
+      height="768"
+      fetchpriority="high"
+      decoding="async"
+    >
+  </div>
+
+  <header class="site-header" id="site-header">
+    <div class="header-container">
+      <button
+        class="nav-toggle"
+        id="nav-toggle"
+        type="button"
+        aria-label="Buka menu utama"
+        aria-controls="primary-navigation"
+        aria-expanded="false"
+      >
+        <span class="nav-toggle-line" aria-hidden="true"></span>
+        <span class="nav-toggle-line" aria-hidden="true"></span>
+        <span class="nav-toggle-line" aria-hidden="true"></span>
+      </button>
+
+      <nav
+        class="primary-navigation"
+        id="primary-navigation"
+        aria-label="Menu utama"
+      >
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a
+              class="nav-link is-active"
+              href="index.html"
+              data-page-target="beranda"
+              aria-current="page"
+            >BERANDA</a>
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              href="materi.html"
+              data-page-target="materi"
+            >MATERI PINNs</a>
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              href="latihan.html"
+              data-page-target="latihan"
+            >LATIHAN</a>
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              href="reference.html"
+              data-page-target="referensi"
+            >REFERENSI</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="home-main" id="main-content" tabindex="-1">
+    <section
+      class="hero ocean-section"
+      id="beranda"
+      aria-labelledby="beranda-title"
+    >
+      <!-- Lapisan dekoratif mengikuti tema laut pada cover PDF UI. -->
+      <div class="hero-background" aria-hidden="true">
+        <div class="ocean-surface"></div>
+        <div class="ocean-light-rays"></div>
+
+        <div class="ocean-bubbles">
+          <span class="bubble bubble--1"></span>
+          <span class="bubble bubble--2"></span>
+          <span class="bubble bubble--3"></span>
+          <span class="bubble bubble--4"></span>
+          <span class="bubble bubble--5"></span>
+        </div>
+
+        <div class="ocean-seaweed"></div>
+
+        <img
+          class="hero-coral"
+          src="assets/images/Terumbu.png"
+          alt=""
+          width="2172"
+          height="724"
+          decoding="async"
+        >
+      </div>
+
+      <div class="hero-content container">
+        <div class="hero-introduction">
+          <h1 class="hero-title" id="beranda-title" lang="en">
+            <span class="hero-title-line hero-title-line--primary">MATHEMATICS BEHIND PHYSICS</span>
+            <span class="hero-title-line hero-title-line--secondary">INFORMED NEURAL NETWORKS</span>
+            <span class="hero-title-line hero-title-line--acronym">(PINNs)</span>
+          </h1>
+
+          <a
+            class="button button--start"
+            id="mulai-belajar"
+            href="materi.html"
+          >MULAI BELAJAR !</a>
+        </div>
+
+        <aside
+          class="instructor-profile"
+          aria-labelledby="instructor-name"
+          lang="en"
+        >
+          <div class="instructor-portrait">
+            <p class="instructor-label">MATERIAL BY :</p>
+
+            <img
+              class="instructor-photo"
+              src="assets/images/PShahab.jpg"
+              alt="Muhammad Luthfi Shahab"
+              width="1650"
+              height="2475"
+              decoding="async"
+            >
+          </div>
+
+          <div class="instructor-information">
+            <h2 class="instructor-name" id="instructor-name">MUHAMMAD LUTHFI SHAHAB</h2>
+
+            <p class="lecture-series">INTERNATIONAL LECTURE SERIES IN MATHEMATICS &amp; STATISTICS (ILMS 2026)</p>
+
+            <p class="lecture-theme">MATHEMATICS AND STATISTICS FOR A SUSTAINABLE AND DATA-DRIVEN ASEAN FUTURE</p>
+
+            <p class="lecture-date">
+              <time datetime="2026-09-24">24 SEPTEMBER 2026</time>
+            </p>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

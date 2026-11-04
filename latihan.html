@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta
+    name="description"
+    content="Mathematics Behind Physics-Informed Neural Networks (PINNs), materi Muhammad Luthfi Shahab dalam International Lecture Series in Mathematics & Statistics (ILMS 2026)."
+  >
+  <title>Latihan | PINNsWEB</title>
+
+  <link rel="preload" href="assets/images/nn.png" as="image">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/script.js" defer></script>
+</head>
+
+<body class="pinns-web page-exercises" data-page="latihan">
+  <a class="skip-link" href="#main-content">Langsung ke konten utama</a>
+
+  <!-- Background utama yang juga digunakan pada halaman lainnya. -->
+  <div class="site-background" aria-hidden="true">
+    <div class="ocean-gradient"></div>
+    <img
+      class="site-background-image neural-background"
+      src="assets/images/nn.png"
+      alt=""
+      width="1366"
+      height="768"
+      fetchpriority="high"
+      decoding="async"
+    >
+  </div>
+
+  <header class="site-header" id="site-header">
+    <div class="header-container">
+      <button
+        class="nav-toggle"
+        id="nav-toggle"
+        type="button"
+        aria-label="Buka menu utama"
+        aria-controls="primary-navigation"
+        aria-expanded="false"
+      >
+        <span class="nav-toggle-line" aria-hidden="true"></span>
+        <span class="nav-toggle-line" aria-hidden="true"></span>
+        <span class="nav-toggle-line" aria-hidden="true"></span>
+      </button>
+
+      <nav
+        class="primary-navigation"
+        id="primary-navigation"
+        aria-label="Menu utama"
+      >
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              href="index.html"
+              data-page-target="beranda"
+            >BERANDA</a>
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              href="materi.html"
+              data-page-target="materi"
+            >MATERI PINNs</a>
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link is-active"
+              href="latihan.html"
+              data-page-target="latihan"
+              aria-current="page"
+            >LATIHAN</a>
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              href="reference.html"
+              data-page-target="referensi"
+            >REFERENSI</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main
+    class="exercises-main page-main"
+    id="main-content"
+    tabindex="-1"
+    data-exercise-viewer
+    data-initial-exercise="latihan-feedforward"
+  >
+    <div class="container exercises-container">
+      <h1 class="page-title" id="latihan-title">Latihan</h1>
+
+      <!-- Kontrol ditampilkan ketika JavaScript siap digunakan.
+           Example, Code, dan Result dalam setiap latihan tetap tampil bersama. -->
+      <div class="exercise-controls" data-exercise-controls hidden>
+        <label class="exercise-selector-label" for="exercise-selector">Pilih latihan</label>
+        <select
+          class="exercise-selector"
+          id="exercise-selector"
+          name="exercise-topic"
+          aria-controls="exercise-topics"
+          data-exercise-selector
+        >
+          <option value="latihan-feedforward" selected>Feedforward Neural Networks</option>
+          <option value="latihan-differential">Differential Equations</option>
+          <option value="latihan-forward">PINNs Forward Problems</option>
+          <option value="latihan-inverse">PINNs Inverse Problems</option>
+        </select>
+      </div>
+
+      <div class="exercise-topics" id="exercise-topics">
+
+        <article
+          class="exercise-card exercise-topic"
+          id="latihan-feedforward"
+          aria-labelledby="latihan-feedforward-title"
+          tabindex="-1"
+          data-exercise="feedforward"
+          lang="en"
+        >
+          <h2 class="exercise-topic-title" id="latihan-feedforward-title">Feedforward Neural Networks</h2>
+
+          <div class="exercise-content material-card">
+
+            <section
+              class="exercise-example exercise-inline-example"
+              id="example-feedforward-network"
+              aria-labelledby="example-feedforward-network-title"
+            >
+              <h3 class="exercise-subheading" id="example-feedforward-network-title">Example 1</h3>
+
+              <p class="equation">
+                <var>y</var> = <var>f</var>(<var>w</var><sub>1</sub><var>x</var><sub>1</sub> + <var>w</var><sub>2</sub><var>x</var><sub>2</sub> + <var>b</var><sub>1</sub>)
+                → <var>y</var> = <var>f</var>(<var>g</var>(<var>x</var><sub>1</sub>, <var>x</var><sub>2</sub>))
+              </p>
+
+              <p class="equation">
+                <var>y</var> = <var>f</var>(<var>w</var><sub>5</sub><var>f</var>(<var>w</var><sub>1</sub><var>x</var><sub>1</sub> + <var>w</var><sub>2</sub><var>x</var><sub>2</sub> + <var>b</var><sub>1</sub>)
+                + <var>w</var><sub>6</sub><var>f</var>(<var>w</var><sub>3</sub><var>x</var><sub>1</sub> + <var>w</var><sub>4</sub><var>x</var><sub>2</sub> + <var>b</var><sub>2</sub>) + <var>b</var><sub>3</sub>)
+              </p>
+
+              <p>where <var>f</var> is a nonlinear <strong>activation</strong> function, such as tanh, ReLU, etc.</p>
+            </section>
+
+            <section
+              class="exercise-example"
+              id="example-feedforward-approximation"
+              aria-labelledby="example-feedforward-approximation-title"
+            >
+              <h3 class="exercise-subheading" id="example-feedforward-approximation-title">Example 2</h3>
+
+              <ul class="material-list">
+                <li>The basic application of neural networks is function approximation or regression.</li>
+                <li>Approximating <var>u</var>(<var>x</var>) = sin(4π<var>x</var>), <var>x</var> ∈ [0, 1].</li>
+                <li>Finding the neural network function <var>u</var>(<var>x</var>, <var>W</var>) using optimization.</li>
+                <li>Choose some collocation points: <var>x</var><sub><var>k</var></sub> = 0.01 × <var>k</var>, <var>k</var> = 0,1, … , 100.</li>
+                <li>Unknowns: the weights <var>W</var>.</li>
+                <li>
+                  Loss function:
+                  <p class="equation"><var>L</var>(<var>W</var>) = <var>MSE</var></p>
+                  <p>where</p>
+
+                  <math class="equation" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+                    <mrow>
+                      <mi>MSE</mi>
+                      <mo>=</mo>
+                      <mfrac><mn>1</mn><mi>n</mi></mfrac>
+                      <munderover>
+                        <mo>∑</mo>
+                        <mrow><mi>k</mi><mo>=</mo><mn>1</mn></mrow>
+                        <mi>n</mi>
+                      </munderover>
+                      <msup>
+                        <mrow>
+                          <mo>(</mo>
+                          <mi>u</mi><mo>(</mo>
+                          <msub><mi>x</mi><mi>k</mi></msub>
+                          <mo>,</mo><mi>W</mi><mo>)</mo>
+                          <mo>−</mo>
+                          <msub><mi>u</mi><mi>true</mi></msub>
+                          <mo>(</mo><msub><mi>x</mi><mi>k</mi></msub><mo>)</mo>
+                          <mo>)</mo>
+                        </mrow>
+                        <mn>2</mn>
+                      </msup>
+                    </mrow>
+                  </math>
+                </li>
+                <li>Standard optimizer, gradient descent: <var>W</var><sub><var>new</var></sub> = <var>W</var><sub><var>old</var></sub> − μ∇<var>L</var>(<var>W</var>).</li>
+                <li>Quasi-Newton: the BFGS algorithm.</li>
+                <li>Optimization: BFGS algorithm</li>
+              </ul>
+            </section>
+
+            <!-- Code dan Result berikut merupakan bagian dari Example 2. -->
+            <section
+              class="code-panel"
+              id="main-code-feedforward"
+              aria-labelledby="main-code-feedforward-title"
+            >
+              <h3 class="exercise-subheading" id="main-code-feedforward-title">Code</h3>
+
+              <ul class="material-list">
+                <li>main.m:</li>
+                <li>
+                  <a
+                    href="https://drive.google.com/drive/folders/18K15aXY-yfMAsA7r5CjSrJVL5UssksYS?usp=sharing"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >https://drive.google.com/drive/folders/18K15aXY-yfMAsA7r5CjSrJVL5UssksYS?usp=sharing</a>
+                </li>
+              </ul>
+
+              <!-- PDF menyediakan tautan main.m, tanpa mencetak isi kode MATLAB.
+                   Tempat ini hanya diisi dengan kode main.m asli dari sumber tersebut.
+                   JavaScript akan menampilkan area salin ketika kode sudah tersedia. -->
+              <div class="code-editor" data-code-container hidden>
+                <div class="code-toolbar">
+                  <span class="code-filename">main.m</span>
+                  <button
+                    class="button button--copy"
+                    type="button"
+                    data-action="copy-code"
+                    data-code-target="code-feedforward"
+                    lang="id"
+                    disabled
+                  >Salin Kode</button>
+                </div>
+                <pre class="code-block" tabindex="0" aria-label="Kode main.m"><code
+                  class="language-matlab"
+                  id="code-feedforward"
+                  data-code-source="https://drive.google.com/drive/folders/18K15aXY-yfMAsA7r5CjSrJVL5UssksYS?usp=sharing"
+                ><!-- Tempat isi main.m asli. --></code></pre>
+              </div>
+              <output
+                class="code-status"
+                id="code-status-feedforward"
+                aria-live="polite"
+                lang="id"
+              ></output>
+            </section>
+
+            <section
+              class="result-panel"
+              id="result-feedforward"
+              aria-labelledby="result-feedforward-title"
+            >
+              <h3 class="exercise-subheading" id="result-feedforward-title">Result</h3>
+              <ul class="material-list">
+                <li>Loss: 3.80874e-06</li>
+              </ul>
+
+              <div class="result-gallery">
+                <figure class="result-figure">
+                  <img
+                    src="assets/images/result11.png"
+                    alt="Loss versus iteration for function approximation"
+                    loading="lazy"
+                    decoding="async"
+                    width="642"
+                    height="580"
+                  >
+                </figure>
+                <figure class="result-figure">
+                  <img
+                    src="assets/images/result12.png"
+                    alt="True Function and NN Approximation for sin(4πx)"
+                    loading="lazy"
+                    decoding="async"
+                    width="642"
+                    height="581"
+                  >
+                </figure>
+                <figure class="result-figure">
+                  <img
+                    src="assets/images/result13.png"
+                    alt="Absolute error of the neural network approximation"
+                    loading="lazy"
+                    decoding="async"
+                    width="645"
+                    height="582"
+                  >
+                </figure>
+              </div>
+            </section>
+          </div>
+        </article>
+
+        <article
+          class="exercise-card exercise-topic"
+          id="latihan-differential"
+          aria-labelledby="latihan-differential-title"
+          tabindex="-1"
+          data-exercise="differential"
+          lang="en"
+        >
+          <h2 class="exercise-topic-title" id="latihan-differential-title">Differential Equations</h2>
+
+          <div class="exercise-content material-card">
+
+            <!-- Pembahasan kedua slide digabung menjadi satu Example. -->
+            <section
+              class="exercise-example"
+              id="example-differential-equation"
+              aria-labelledby="example-differential-equation-title"
+            >
+              <h3 class="exercise-subheading" id="example-differential-equation-title">Example</h3>
+
+              <ul class="material-list">
+                <li>
+                  The one-dimensional Bratu equation:
+                  <p class="equation"><var>u</var><sub><var>xx</var></sub> + <var>C</var><var>e</var><sup><var>u</var></sup> = 0,&nbsp; <var>x</var> ∈ [0, 1]</p>
+                  <p class="equation"><var>u</var>(0) = 0,&nbsp; <var>u</var>(1) = 0</p>
+                </li>
+                <li><var>C</var> = 2</li>
+                <li>
+                  Analytical solution:
+                  <math class="equation" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+                    <mrow>
+                      <mi>u</mi><mo>(</mo><mi>x</mi><mo>)</mo>
+                      <mo>=</mo>
+                      <mn>2</mn><mi mathvariant="normal">ln</mi><mo>(</mo>
+                      <mfrac>
+                        <mrow><mi mathvariant="normal">cosh</mi><mi>θ</mi></mrow>
+                        <mrow>
+                          <mi mathvariant="normal">cosh</mi><mo>(</mo>
+                          <mi>θ</mi><mo>(</mo><mn>1</mn><mo>−</mo><mn>2</mn><mi>x</mi><mo>)</mo>
+                          <mo>)</mo>
+                        </mrow>
+                      </mfrac>
+                      <mo>)</mo>
+                    </mrow>
+                  </math>
+                  <p>where <var>θ</var> ≈ 0.589387763469351.</p>
+                </li>
+                <li>Finding the approximation <var>u</var>(<var>x</var><sub><var>k</var></sub>) = <var>u</var><sub><var>k</var></sub> using <strong>finite difference</strong> method (FDM).</li>
+                <li>Divide the domain [0, 1] into <var>n</var> = 100 subintervals. Choose <var>h</var> = 1/<var>n</var>.</li>
+                <li>Take collocation/grid points: <var>x</var><sub><var>k</var></sub> = 0.01 × <var>k</var>, <var>k</var> = 1,2, … , 99.</li>
+                <li>Unknowns: <var>u</var><sub><var>k</var></sub>, <var>k</var> = 1,2, … , 99.</li>
+                <li>Set <var>u</var><sub>0</sub> = 0, <var>u</var><sub>100</sub> = 0.</li>
+                <li id="example-differential-discretization">
+                  Discretization of the Bratu equation:
+                  <p class="equation"><var>u</var><sub><var>xx</var></sub>(<var>x</var><sub><var>k</var></sub>) + <var>C</var><var>e</var><sup><var>u</var>(<var>x</var><sub><var>k</var></sub>)</sup> = 0, <var>k</var> = 1,2, … , 99</p>
+                </li>
+                <li>
+                  Approximating <var>u</var><sub><var>xx</var></sub>(<var>x</var><sub><var>k</var></sub>) using the central finite difference formula:
+                  <math class="equation" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+                    <mrow>
+                      <msub><mi>u</mi><mi>xx</mi></msub>
+                      <mo>(</mo><msub><mi>x</mi><mi>k</mi></msub><mo>)</mo>
+                      <mo>≈</mo>
+                      <mfrac>
+                        <mrow>
+                          <msub><mi>u</mi><mrow><mi>k</mi><mo>+</mo><mn>1</mn></mrow></msub>
+                          <mo>−</mo><mn>2</mn><msub><mi>u</mi><mi>k</mi></msub>
+                          <mo>+</mo>
+                          <msub><mi>u</mi><mrow><mi>k</mi><mo>−</mo><mn>1</mn></mrow></msub>
+                        </mrow>
+                        <msup><mi>h</mi><mn>2</mn></msup>
+                      </mfrac>
+                    </mrow>
+                  </math>
+                </li>
+                <li>
+                  New system of nonlinear equations:
+                  <math class="equation" display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+                    <mrow>
+                      <mfrac>
+                        <mrow>
+                          <msub><mi>u</mi><mrow><mi>k</mi><mo>+</mo><mn>1</mn></mrow></msub>
+                          <mo>−</mo><mn>2</mn><msub><mi>u</mi><mi>k</mi></msub>
+                          <mo>+</mo>
+                          <msub><mi>u</mi><mrow><mi>k</mi><mo>−</mo><mn>1</mn></mrow></msub>
+                        </mrow>
+                        <msup><mi>h</mi><mn>2</mn></msup>
+                      </mfrac>
+                      <mo>+</mo><mi>C</mi>
+                      <msup><mi>e</mi><msub><mi>u</mi><mi>k</mi></msub></msup>
+                      <mo>=</mo><mn>0</mn><mo>,</mo>
+                      <mi>k</mi><mo>=</mo><mn>1</mn><mo>,</mo><mn>2</mn><mo>,</mo><mo>…</mo><mo>,</mo><mn>99</mn>
+                    </mrow>
+                  </math>
+                </li>
+                <li>Optimization: the Levenberg-Marquardt algorithm.</li>
+              </ul>
+            </section>
+
+            <section
+              class="code-panel"
+              id="main-code-differential"
+              aria-labelledby="main-code-differential-title"
+            >
+              <h3 class="exercise-subheading" id="main-code-differential-title">Code</h3>
+
+              <ul class="material-list">
+                <li>main.m:</li>
+                <li>
+                  <a
+                    href="https://drive.google.com/drive/folders/1giB0P19ZguI8yirOmMbZIHO70Pq_7zkr?usp=sharing"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >https://drive.google.com/drive/folders/1giB0P19ZguI8yirOmMbZIHO70Pq_7zkr?usp=sharing</a>
+                </li>
+              </ul>
+
+              <!-- PDF menyediakan tautan main.m, tanpa mencetak isi kode MATLAB.
+                   Tempat ini hanya diisi dengan kode main.m asli dari sumber tersebut.
+                   JavaScript akan menampilkan area salin ketika kode sudah tersedia. -->
+              <div class="code-editor" data-code-container hidden>
+                <div class="code-toolbar">
+                  <span class="code-filename">main.m</span>
+                  <button
+                    class="button button--copy"
+                    type="button"
+                    data-action="copy-code"
+                    data-code-target="code-differential"
+                    lang="id"
+                    disabled
+                  >Salin Kode</button>
+                </div>
+                <pre class="code-block" tabindex="0" aria-label="Kode main.m"><code
+                  class="language-matlab"
+                  id="code-differential"
+                  data-code-source="https://drive.google.com/drive/folders/1giB0P19ZguI8yirOmMbZIHO70Pq_7zkr?usp=sharing"
+                ><!-- Tempat isi main.m asli. --></code></pre>
+              </div>
+              <output
+                class="code-status"
+                id="code-status-differential"
+                aria-live="polite"
+                lang="id"
+              ></output>
+            </section>
+
+            <section
+              class="result-panel"
+              id="result-differential"
+              aria-labelledby="result-differential-title"
+            >
+              <h3 class="exercise-subheading" id="result-differential-title">Result</h3>
+
+              <div class="result-gallery">
+                <figure class="result-figure">
+                  <img
+                    src="assets/images/result21.png"
+                    alt="True Solution and FDM Solution of the Bratu equation"
+                    loading="lazy"
+                    decoding="async"
+                    width="792"
+                    height="712"
+                  >
+                </figure>
+                <figure class="result-figure">
+                  <img
+                    src="assets/images/result22.png"
+                    alt="Absolute error of the finite difference solution"
+                    loading="lazy"
+                    decoding="async"
+                    width="791"
+                    height="713"
+                  >
+                </figure>
+              </div>
+            </section>
+          </div>
+        </article>
+
+        <article
+          class="exercise-card exercise-topic"
+          id="latihan-forward"
+          aria-labelledby="latihan-forward-title"
+          tabindex="-1"
+          data-exercise="forward"
+          lang="en"
+        >
+          <h2 class="exercise-topic-title" id="latihan-forward-title">Physics-Informed Neural Networks (PINNs) - Forward Problems</h2>
+
+          <div class="exercise-content material-card">
+
+            <!-- Pembahasan kedua slide digabung menjadi satu Example. -->
+            <section
+              class="exercise-example"
+              id="example-forward-equation"
+              aria-labelledby="example-forward-equation-title"
+            >
+              <h3 class="exercise-subheading" id="example-forward-equation-title">Example</h3>
+
+              <ul class="material-list">
+                <li>
+                  The one-dimensional Bratu equation:
+                  <p class="equation">u<sub>xx</sub> + Ce<sup>u</sup> = 0, &nbsp; x ∈ [0, 1]</p>
+                  <p class="equation">u(0) = 0, &nbsp; u(1) = 0</p>
+                </li>
+                <li>C = 2</li>
+                <li>
+                  Analytical solution:
+                  <p class="equation">u(x) = 2 ln(cosh θ / cosh(θ(1 − 2x)))</p>
+                  <p>where θ ≈ 0.589387763469351.</p>
+                </li>
+                <li>Choose some random interior points: x<sub>k</sub><sup>i</sup> ∈ (0, 1), n<sub>i</sub> = 99.</li>
+                <li>Two boundary points: x<sub>1</sub><sup>b</sup> = 0, x<sub>2</sub><sup>b</sup> = 1, n<sub>b</sub> = 2.</li>
+                <li id="example-forward-loss">
+                  Loss function:
+                  <p class="equation">L(W) = MSE<sub>i</sub> + MSE<sub>b</sub></p>
+                  <p>where</p>
+                  <p class="equation">MSE<sub>i</sub> = (1/n<sub>i</sub>) ∑<sub>k=1</sub><sup>n<sub>i</sub></sup> (u<sub>xx</sub>(x<sub>k</sub><sup>i</sup>, W) + 2e<sup>u(x<sub>k</sub><sup>i</sup>, W)</sup>)<sup>2</sup></p>
+                  <p>and</p>
+                  <p class="equation">MSE<sub>b</sub> = (1/n<sub>b</sub>) ∑<sub>k=1</sub><sup>n<sub>b</sub></sup> (u(x<sub>k</sub><sup>b</sup>, W) − 0)<sup>2</sup></p>
+                </li>
+                <li>
+                  Or
+                  <p class="equation">L(W) = MSE<sub>i</sub> + αMSE<sub>b</sub></p>
+                  <p>where α balances the two terms.</p>
+                </li>
+                <li>Optimization: BFGS algorithm</li>
+              </ul>
+            </section>
+
+            <section
+              class="code-panel"
+              id="main-code-forward"
+              aria-labelledby="main-code-forward-title"
+            >
+              <h3 class="exercise-subheading" id="main-code-forward-title">Code</h3>
+
+              <ul class="material-list">
+                <li>main.m:</li>
+                <li>
+                  <a
+                    href="https://drive.google.com/drive/folders/1pef0OeYg_jfmB1TA6YVU-v-q2-RxSIid?usp=sharing"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >https://drive.google.com/drive/folders/1pef0OeYg_jfmB1TA6YVU-v-q2-RxSIid?usp=sharing</a>
+                </li>
+              </ul>
+
+              <!-- PDF menyediakan tautan main.m, tanpa mencetak isi kode MATLAB.
+                   Tempat ini hanya diisi dengan kode main.m asli dari sumber tersebut.
+                   JavaScript akan menampilkan area salin ketika kode sudah tersedia. -->
+              <div class="code-editor" data-code-container hidden>
+                <div class="code-toolbar">
+                  <span class="code-filename">main.m</span>
+                  <button
+                    class="button button--copy"
+                    type="button"
+                    data-action="copy-code"
+                    data-code-target="code-forward"
+                    lang="id"
+                    disabled
+                  >Salin Kode</button>
+                </div>
+                <pre class="code-block" tabindex="0" aria-label="Kode main.m"><code
+                  class="language-matlab"
+                  id="code-forward"
+                  data-code-source="https://drive.google.com/drive/folders/1pef0OeYg_jfmB1TA6YVU-v-q2-RxSIid?usp=sharing"
+                ><!-- Tempat isi main.m asli. --></code></pre>
+              </div>
+              <output
+                class="code-status"
+                id="code-status-forward"
+                aria-live="polite"
+                lang="id"
+              ></output>
+            </section>
+
+            <section
+              class="result-panel"
+              id="result-forward"
+              aria-labelledby="result-forward-title"
+            >
+              <h3 class="exercise-subheading" id="result-forward-title">Result</h3>
+              <ul class="material-list">
+                <li>Loss: 2.47038e-07</li>
+              </ul>
+
+              <div class="result-gallery">
+                <figure class="result-figure">
+                  <img
+                    src="assets/images/result31.png"
+                    alt="Figure 1: Loss against Iteration."
+                    loading="lazy"
+                    decoding="async"
+                    width="507"
+                    height="461"
+                  >
+                </figure>
+                <figure class="result-figure">
+                  <img
+                    src="assets/images/result32.png"
+                    alt="Figure 2: True Solution and PINNs Solution; u against x."
+                    loading="lazy"
+                    decoding="async"
+                    width="512"
+                    height="462"
+                  >
+                </figure>
+                <figure class="result-figure">
+                  <img
+                    src="assets/images/result33.png"
+                    alt="Figure 3: abs(uPINNs − uTrue) against x."
+                    loading="lazy"
+                    decoding="async"
+                    width="508"
+                    height="460"
+                  >
+                </figure>
+              </div>
+            </section>
+          </div>
+        </article>
+
+        <article
+          class="exercise-card exercise-topic"
+          id="latihan-inverse"
+          aria-labelledby="latihan-inverse-title"
+          tabindex="-1"
+          data-exercise="inverse"
+          lang="en"
+        >
+          <h2 class="exercise-topic-title" id="latihan-inverse-title">Physics-Informed Neural Networks (PINNs) - Inverse Problems</h2>
+
+          <div class="exercise-content material-card">
+
+            <!-- Pembahasan kedua slide digabung menjadi satu Example. -->
+            <section
+              class="exercise-example"
+              id="example-inverse-equation"
+              aria-labelledby="example-inverse-equation-title"
+            >
+              <h3 class="exercise-subheading" id="example-inverse-equation-title">Example</h3>
+
+              <ul class="material-list">
+                <li>
+                  The one-dimensional Bratu equation:
+                  <p class="equation">u<sub>xx</sub> + λ<sub>1</sub>e<sup>λ<sub>2</sub>u/2</sup> = 0, &nbsp; x ∈ [0, 1]</p>
+                  <p class="equation">u(0) = 0, &nbsp; u(1) = 0</p>
+                </li>
+                <li>C = 1. True values: λ<sub>1</sub> = 1 and λ<sub>2</sub> = 2.</li>
+                <li>Objective: Given partial observations of the solution (data) and the known structure of the differential equation, the objective is to identify λ while simultaneously approximating the solution u.</li>
+                <li>Given: {x<sub>k</sub>, u(x<sub>k</sub>)}, k = 1, ..., n.</li>
+                <li id="example-inverse-loss">
+                  Loss function:
+                  <p class="equation">L(W, λ<sub>1</sub>, λ<sub>2</sub>) = MSE<sub>de</sub> + MSE<sub>data</sub></p>
+                  <p>where the differential equation residual</p>
+                  <p class="equation">MSE<sub>de</sub>(W, λ<sub>1</sub>, λ<sub>2</sub>) = (1/n) ∑<sub>k=1</sub><sup>n</sup> (u<sub>xx</sub>(x<sub>k</sub>, W) + λ<sub>1</sub>e<sup>λ<sub>2</sub>u(x<sub>k</sub>, W)/2</sup>)<sup>2</sup></p>
+                  <p>and</p>
+                  <p class="equation">MSE<sub>data</sub>(W) = (1/n) ∑<sub>k=1</sub><sup>n</sup> (u(x<sub>k</sub>, W) − u<sub>true</sub>(x<sub>k</sub>))<sup>2</sup></p>
+                </li>
+                <li>
+                  Or by considering least squares problem F = [F<sub>de</sub>; F<sub>data</sub>] where
+                  <p class="equation">F<sub>de</sub> = [u<sub>xx</sub>(x<sub>k</sub>, W) + λ<sub>1</sub>e<sup>λ<sub>2</sub>u(x<sub>k</sub>, W)/2</sup>] and F<sub>data</sub> = [u(x<sub>k</sub>, W) − u<sub>true</sub>(x<sub>k</sub>)]</p>
+                </li>
+                <li>Optimization: the Levenberg-Marquardt algorithm</li>
+              </ul>
+            </section>
+
+            <section
+              class="code-panel"
+              id="main-code-inverse"
+              aria-labelledby="main-code-inverse-title"
+            >
+              <h3 class="exercise-subheading" id="main-code-inverse-title">Code</h3>
+
+              <ul class="material-list">
+                <li>main.m:</li>
+                <li>
+                  <a
+                    href="https://drive.google.com/drive/folders/1YXK4LGDOIZXHySQcR1KUDkgd4Wu6tBga?usp=sharing"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >https://drive.google.com/drive/folders/1YXK4LGDOIZXHySQcR1KUDkgd4Wu6tBga?usp=sharing</a>
+                </li>
+              </ul>
+
+              <!-- PDF menyediakan tautan main.m, tanpa mencetak isi kode MATLAB.
+                   Tempat ini hanya diisi dengan kode main.m asli dari sumber tersebut.
+                   JavaScript akan menampilkan area salin ketika kode sudah tersedia. -->
+              <div class="code-editor" data-code-container hidden>
+                <div class="code-toolbar">
+                  <span class="code-filename">main.m</span>
+                  <button
+                    class="button button--copy"
+                    type="button"
+                    data-action="copy-code"
+                    data-code-target="code-inverse"
+                    lang="id"
+                    disabled
+                  >Salin Kode</button>
+                </div>
+                <pre class="code-block" tabindex="0" aria-label="Kode main.m"><code
+                  class="language-matlab"
+                  id="code-inverse"
+                  data-code-source="https://drive.google.com/drive/folders/1YXK4LGDOIZXHySQcR1KUDkgd4Wu6tBga?usp=sharing"
+                ><!-- Tempat isi main.m asli. --></code></pre>
+              </div>
+              <output
+                class="code-status"
+                id="code-status-inverse"
+                aria-live="polite"
+                lang="id"
+              ></output>
+            </section>
+
+            <section
+              class="result-panel"
+              id="result-inverse"
+              aria-labelledby="result-inverse-title"
+            >
+              <h3 class="exercise-subheading" id="result-inverse-title">Result</h3>
+              <ul class="material-list">
+                <li>Loss: 9.1483e-08</li>
+              </ul>
+
+              <div class="result-gallery">
+                <figure class="result-figure">
+                  <img
+                    src="assets/images/result41.png"
+                    alt="Figure 1: Loss against Iteration."
+                    loading="lazy"
+                    decoding="async"
+                    width="610"
+                    height="547"
+                  >
+                </figure>
+                <figure class="result-figure">
+                  <img
+                    src="assets/images/result42.png"
+                    alt="Figure 2: Lambda1 and Lambda2 against Iteration."
+                    loading="lazy"
+                    decoding="async"
+                    width="605"
+                    height="548"
+                  >
+                </figure>
+                <figure class="result-figure">
+                  <img
+                    src="assets/images/result43.png"
+                    alt="Figure 3: True Solution and PINNs Solution; u against x."
+                    loading="lazy"
+                    decoding="async"
+                    width="607"
+                    height="542"
+                  >
+                </figure>
+              </div>
+            </section>
+          </div>
+        </article>
+      </div>
+
+      <nav
+        class="exercise-pagination"
+        aria-label="Navigasi latihan"
+        data-exercise-controls
+        hidden
+      >
+        <button
+          class="button button--previous"
+          type="button"
+          data-action="previous-exercise"
+          disabled
+        >Sebelumnya</button>
+        <a class="button button--material" href="materi.html">Kembali ke Materi</a>
+        <button
+          class="button button--next"
+          type="button"
+          data-action="next-exercise"
+        >Berikutnya</button>
+      </nav>
+    </div>
+  </main>
+</body>
+</html>
