@@ -2,7 +2,7 @@
 
 A simple static website for learning **Physics-Informed Neural Networks (PINNs)**, with study material, exercises, and references.
 
-🌐 **Live demo:** https://zahraychana.github.io/pinns-learning-website/
+🌐 **Result:** (https://pinnsweb.infinityfree.io/)
 
 ## Features
 
