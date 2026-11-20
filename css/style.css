@@ -19,8 +19,8 @@
 
 /* 1. Token ---------------------------------------------------------------- */
 :root {
-  --font-sans: "Plus Jakarta Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
-  --font-display: "Space Grotesk", "Plus Jakarta Sans", "Segoe UI", sans-serif;
+  --font-sans: "Poppins", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-display: "Poppins", "Segoe UI", sans-serif;
   --font-mono: "JetBrains Mono", "Cascadia Code", Consolas, monospace;
 
   --radius-sm: 8px;
@@ -1401,3 +1401,84 @@ select:focus, input:focus { outline: 2px solid var(--accent); outline-offset: 1p
 /* Tambahan: tombol kuis ukuran matriks */
 .matrix-quiz .mq-item { font: inherit; color: var(--text); cursor: pointer; transition: border-color .2s, transform .2s; }
 .matrix-quiz .mq-item:hover { border-color: var(--accent); transform: translateY(-2px); }
+
+/* ==========================================================================
+   Penyelarasan tata letak (Poppins, jarak konsisten, kartu sama tinggi)
+   ========================================================================== */
+body { font-size: 15.5px; line-height: 1.75; }
+h1, h2, h3, h4 { letter-spacing: -.01em; font-weight: 700; }
+h1 { font-size: clamp(1.9rem, 4.2vw, 3rem); }
+h2 { font-size: clamp(1.45rem, 2.6vw, 2rem); }
+h3 { font-size: clamp(1.08rem, 1.7vw, 1.25rem); font-weight: 600; }
+.nav-link { font-weight: 500; font-size: .9rem; }
+.brand { font-weight: 700; }
+.btn { font-weight: 600; }
+
+:root { --container: 1140px; }
+.section { padding: 72px 0; }
+.section--tight { padding: 48px 0; }
+.section + .section { padding-top: 24px; }
+
+/* Judul bagian beranda selalu rata tengah agar simetris */
+.page-home .section-head,
+body[data-page="beranda"] .section-head { margin-inline: auto; text-align: center; max-width: 720px; }
+body[data-page="beranda"] .section-head .toc-progress { margin-inline: auto; }
+
+/* Hero */
+.hero { padding: 64px 0 48px; }
+.hero-grid { grid-template-columns: 1.1fr .9fr; gap: 56px; }
+.hero h1 { font-size: clamp(2rem, 4.6vw, 3.3rem); line-height: 1.15; }
+.hero-lead { margin-bottom: 1.6rem; }
+.hero-meta {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  max-width: 560px;
+}
+.hero-meta > div {
+  padding: .7rem .8rem;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  text-align: center;
+  font-size: .8rem;
+}
+.hero-meta strong { font-size: 1.4rem; }
+
+/* Kartu dalam grid: tinggi sama, isi tersusun rapi */
+.grid { align-items: stretch; }
+.grid > .card { display: flex; flex-direction: column; height: 100%; }
+.grid > .card .feature-icon { flex: none; }
+.grid--4 > .card h3 { font-size: 1.05rem; }
+.grid--4 > .card p { font-size: .9rem; }
+
+/* Roadmap rata tengah */
+.roadmap-step { text-align: center; }
+.roadmap-num { margin-inline: auto; }
+.roadmap-step p { max-width: 240px; margin-inline: auto; }
+
+/* Materi & halaman dalam */
+.page-hero { padding: 48px 0 28px; }
+.learn-layout { gap: 32px; }
+.lesson { padding: 32px; }
+.module-header { padding: 32px; }
+.lesson h3 { margin-top: 0; }
+
+/* Arena: kartu game sama tinggi */
+.game-card { height: 100%; }
+
+/* Footer */
+.footer-grid { align-items: start; }
+
+@media (max-width: 860px) {
+  .hero-grid { grid-template-columns: 1fr; gap: 36px; }
+  .hero { text-align: center; }
+  .hero-lead { margin-inline: auto; }
+  .hero .btn-row { justify-content: center; }
+  .hero-meta { margin-inline: auto; }
+  .lesson, .module-header { padding: 22px; }
+}
+@media (max-width: 560px) {
+  .hero-meta { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .section { padding: 48px 0; }
+}

@@ -39,7 +39,7 @@ PINNsWEB/
 │   ├── quiz-data.js    Bank soal
 │   ├── glossary-data.js Data glosarium
 │   └── reference.js    Pencarian glosarium
-├── assets/img/         Foto pemateri & grafik hasil (WebP)
+├── assets/img/results/ Grafik hasil (WebP)
 └── .github/workflows/deploy.yml   Auto-deploy ke InfinityFree via FTP
 ```
 
