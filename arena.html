@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arena Game | PINNsWEB</title>
+  <meta name="description" content="Mini game interaktif untuk belajar PINNs: Fit the Wave, Gradient Descent Golf, PINN Lab, Detektif λ, Pasangkan Istilah, dan Kuis Galaksi.">
+  <meta name="theme-color" content="#0b1030">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%230b1030'/%3E%3Cg stroke='%23a78bfa' stroke-width='1.6'%3E%3Cpath d='M7 10l9-3m-9 3l9 9m-9 4l9-16m-9 16l9-4m0-12l9 9m-9 3l9-3'/%3E%3C/g%3E%3Cg fill='%23a78bfa'%3E%3Ccircle cx='7' cy='10' r='2.6'/%3E%3Ccircle cx='7' cy='23' r='2.6'/%3E%3Ccircle cx='16' cy='7' r='2.6'/%3E%3Ccircle cx='16' cy='19' r='2.6'/%3E%3C/g%3E%3Ccircle cx='25' cy='16' r='3' fill='%23f0abfc'/%3E%3C/svg%3E">
+  <script>
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem("pinns-theme"); } catch (e) {}
+      if (t !== "light" && t !== "dark") t = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", t);
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+  <script defer src="js/main.js"></script>
+  <script defer src="js/plot.js"></script>
+  <script defer src="js/nn.js"></script>
+  <script defer src="js/quiz-data.js"></script>
+  <script defer src="js/glossary-data.js"></script>
+  <script defer src="js/quiz.js"></script>
+  <script defer src="js/arena.js"></script>
+</head>
+
+<body data-page="arena">
+  <a class="skip-link" href="#main">Langsung ke konten utama</a>
+  <div class="galaxy" aria-hidden="true"></div>
+  <canvas id="network-canvas" aria-hidden="true"></canvas>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="index.html" aria-label="PINNsWEB, ke beranda">
+        <svg class="brand-mark" viewBox="0 0 36 36" aria-hidden="true">
+          <path class="bm-edge" d="M7 11L18 6M7 11L18 18M7 11L18 30M7 25L18 6M7 25L18 18M7 25L18 30M18 6L29 18M18 18L29 18M18 30L29 18"/>
+          <circle class="bm-node bm-node--in" cx="7" cy="11" r="3.2"/><circle class="bm-node bm-node--in" cx="7" cy="25" r="3.2"/>
+          <circle class="bm-node" cx="18" cy="6" r="3.2"/><circle class="bm-node" cx="18" cy="18" r="3.2"/><circle class="bm-node" cx="18" cy="30" r="3.2"/>
+          <circle class="bm-node bm-node--out" cx="29" cy="18" r="3.8"/>
+        </svg>
+        <span class="brand-text">PINNsWEB<small>Mathematics Behind PINNs</small></span>
+      </a>
+      <nav class="primary-nav" id="primary-nav" aria-label="Menu utama">
+        <ul class="nav-list">
+          <li><a class="nav-link" href="index.html">Beranda</a></li>
+          <li><a class="nav-link" href="materi.html">Materi</a></li>
+          <li><a class="nav-link" href="latihan.html">Latihan</a></li>
+          <li><a class="nav-link" href="arena.html" aria-current="page">Arena Game</a></li>
+          <li><a class="nav-link" href="reference.html">Referensi</a></li>
+        </ul>
+      </nav>
+      <button class="icon-btn theme-toggle" type="button" aria-label="Ganti tema">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      </button>
+      <button class="icon-btn nav-toggle" type="button" aria-label="Buka menu" aria-controls="primary-nav" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <section class="page-hero">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb"><a href="index.html">Beranda</a><span aria-hidden="true">/</span><span>Arena Game</span></nav>
+        <span class="eyebrow">Belajar sambil bermain</span>
+        <h1>Arena <span class="gradient-text">Game</span></h1>
+        <p>Enam mini game yang masing-masing melatih satu konsep inti PINNs. Semua perhitungan, termasuk training neural network dan PINN, berjalan sungguhan di browser-mu. Rekor terbaik tersimpan otomatis.</p>
+      </div>
+    </section>
+
+    <div class="container" style="padding-bottom:40px">
+      <div class="game-grid" role="group" aria-label="Pilih game">
+        <button class="card card--hover game-card" type="button" data-game="fitwave" aria-pressed="false" aria-controls="game-stage">
+          <div class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 12c2.5-6 5-6 7.5 0s5 6 7.5 0 3.5-4 5-3"/></svg></div>
+          <h3>Fit the Wave</h3>
+          <p>Atur <em>weight</em> &amp; <em>bias</em> 3 neuron agar jaringan menyerupai kurva target, lalu bandingkan dengan training otomatis.</p>
+          <div class="game-meta"><span class="badge">Modul 1</span><span class="badge">Regresi</span></div>
+          <span class="game-best" data-best="fitwave"></span>
+        </button>
+        <button class="card card--hover game-card" type="button" data-game="golf" aria-pressed="false" aria-controls="game-stage">
+          <div class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 18V3l6 3-6 3"/><ellipse cx="12" cy="19" rx="7" ry="2"/></svg></div>
+          <h3>Gradient Descent Golf</h3>
+          <p>Pilih titik awal dan <em>learning rate</em> μ. Bawa bola ke lubang minimum global dengan langkah sesedikit mungkin.</p>
+          <div class="game-meta"><span class="badge">Modul 1</span><span class="badge">Optimasi</span></div>
+          <span class="game-best" data-best="golf"></span>
+        </button>
+        <button class="card card--hover game-card" type="button" data-game="pinn-lab" aria-pressed="false" aria-controls="game-stage">
+          <div class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V3"/></svg></div>
+          <h3>PINN Lab</h3>
+          <p>Latih PINN sungguhan untuk persamaan Bratu. Ubah neuron, \(n_i\), \(\alpha\), dan <em>hard constraint</em>, lalu capai galat &lt; 10⁻³.</p>
+          <div class="game-meta"><span class="badge">Modul 3</span><span class="badge">Forward</span></div>
+          <span class="game-best" data-best="pinn-lab"></span>
+        </button>
+        <button class="card card--hover game-card" type="button" data-game="detective" aria-pressed="false" aria-controls="game-stage">
+          <div class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="10" cy="10" r="6"/><path d="M14.5 14.5L21 21"/></svg></div>
+          <h3>Detektif λ</h3>
+          <p>Diberikan data observasi, temukan parameter tersembunyi \(\lambda_1,\lambda_2\) dengan membuat residual fisika nol.</p>
+          <div class="game-meta"><span class="badge">Modul 4</span><span class="badge">Inverse</span></div>
+          <span class="game-best" data-best="detective"></span>
+        </button>
+        <button class="card card--hover game-card" type="button" data-game="match" aria-pressed="false" aria-controls="game-stage">
+          <div class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="7" height="7" rx="2"/><rect x="14" y="13" width="7" height="7" rx="2"/><path d="M10 7.5h4a3 3 0 0 1 3 3V13"/></svg></div>
+          <h3>Pasangkan Istilah</h3>
+          <p>Hubungkan istilah teknis dengan definisinya secepat mungkin. Setiap putaran memakai 6 istilah acak dari glosarium.</p>
+          <div class="game-meta"><span class="badge">Semua modul</span><span class="badge">Memori</span></div>
+          <span class="game-best" data-best="match"></span>
+        </button>
+        <button class="card card--hover game-card" type="button" data-game="galaxy-quiz" aria-pressed="false" aria-controls="game-stage">
+          <div class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l2.6 5.3 5.9.9-4.2 4.1 1 5.8L12 16.4 6.7 19.1l1-5.8-4.2-4.1 5.9-.9z"/></svg></div>
+          <h3>Kuis Galaksi</h3>
+          <p>10 soal, 20 detik per soal, 3 nyawa. Jawab cepat dan beruntun untuk bonus poin <em>streak</em>.</p>
+          <div class="game-meta"><span class="badge">Semua modul</span><span class="badge">Waktu</span></div>
+          <span class="game-best" data-best="galaxy-quiz"></span>
+        </button>
+      </div>
+
+      <div class="game-stage" id="game-stage" aria-live="polite">
+        <p class="card text-center text-muted" data-empty>Pilih salah satu game di atas untuk mulai bermain. 🎮</p>
+
+        <!-- Fit the Wave -->
+        <section class="card game-panel" id="fitwave" data-panel="fitwave" hidden aria-labelledby="fitwave-title">
+          <h2 id="fitwave-title">🌊 Fit the Wave</h2>
+          <p class="text-muted">Jaringan: \(u(x)=\sum_{j=1}^{3} v_j\tanh(w_jx+b_j)+c\). Tugasmu: buat kurva ungu menempel pada titik target dengan memperkecil MSE. Bintang: ★ MSE &lt; 0.02, ★★ &lt; 0.005, ★★★ &lt; 0.001.</p>
+          <div class="game-hud">
+            <div class="seg" role="group" aria-label="Pilih level" data-levels></div>
+            <span class="hud-item">MSE <strong data-mse>—</strong></span>
+            <span class="hud-item stars" data-stars aria-label="Bintang"></span>
+          </div>
+          <div class="widget-grid">
+            <div>
+              <div data-sliders></div>
+              <div class="btn-row mt-1">
+                <button class="btn btn--primary btn--sm" type="button" data-auto>⚡ Latih otomatis (Adam)</button>
+                <button class="btn btn--ghost btn--sm" type="button" data-random>Acak</button>
+              </div>
+            </div>
+            <div>
+              <div class="plot"><canvas aria-label="Kurva target dan kurva jaringan"></canvas></div>
+              <div class="plot-legend"><span class="dot" style="--c:var(--accent-3)">target</span><span style="--c:var(--accent)">jaringan u(x)</span><span style="--c:var(--pink)">neuron individual</span></div>
+              <p class="widget-hint" data-msg></p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Golf -->
+        <section class="card game-panel" id="golf" data-panel="golf" hidden aria-labelledby="golf-title">
+          <h2 id="golf-title">⛳ Gradient Descent Golf</h2>
+          <p class="text-muted">Bola bergerak mengikuti \(w_{k+1}=w_k-\mu L'(w_k)\). Lubang (🏁) ada di minimum <strong>global</strong>. Masuk lubang jika \(|w-w^*|&lt;0.05\) dalam maksimal 40 langkah. Bintang: ★★★ ≤ 6 langkah, ★★ ≤ 15, ★ ≤ 40.</p>
+          <div class="game-hud">
+            <div class="seg" role="group" aria-label="Pilih lapangan" data-levels></div>
+            <span class="hud-item">Langkah <strong data-steps>0</strong></span>
+            <span class="hud-item">L(w) <strong data-loss>—</strong></span>
+            <span class="hud-item stars" data-stars></span>
+          </div>
+          <div class="widget-grid">
+            <div>
+              <div class="control"><label for="golf-w0"><span>Titik awal w₀</span><output id="golf-w0-out">-3.00</output></label><input type="range" id="golf-w0" min="-4" max="5" step="0.05" value="-3"></div>
+              <div class="control"><label for="golf-mu"><span>Learning rate μ</span><output id="golf-mu-out">0.100</output></label><input type="range" id="golf-mu" min="-3" max="0.3" step="0.01" value="-1"></div>
+              <div class="btn-row"><button class="btn btn--primary" type="button" data-swing>⛳ Pukul!</button><button class="btn btn--ghost btn--sm" type="button" data-reset>Reset</button></div>
+              <p class="widget-hint" data-msg></p>
+            </div>
+            <div>
+              <div class="plot"><canvas aria-label="Lanskap loss dan jalur bola"></canvas></div>
+              <div class="plot-legend"><span style="--c:var(--accent)">L(w)</span><span class="dot" style="--c:var(--pink)">jejak bola</span><span class="dot" style="--c:var(--success)">lubang (minimum global)</span></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- PINN Lab -->
+        <section class="card game-panel" id="pinn-lab" data-panel="pinn-lab" hidden aria-labelledby="lab-title">
+          <h2 id="lab-title">🧪 PINN Lab: Bratu</h2>
+          <p class="text-muted">Model: \(u(x)=\sum_j v_j\tanh(w_jx+b_j)+c\) (soft) atau \(u=x(1-x)N(x)\) (hard). Loss \(=MSE_i+\alpha MSE_b\), dioptimasi dengan Adam. Turunan \(u_{xx}\) dan gradien terhadap semua bobot dihitung analitik dengan <em>chain rule</em>. Tantangan: capai <strong>galat maks &lt; 10⁻³</strong>.</p>
+          <div class="widget-grid">
+            <div>
+              <div class="control"><label for="lab-c"><span>Parameter C</span><output id="lab-c-out">2.0</output></label><input type="range" id="lab-c" min="0.5" max="3.4" step="0.1" value="2"></div>
+              <div class="control"><label for="lab-h"><span>Neuron hidden</span><output id="lab-h-out">10</output></label><input type="range" id="lab-h" min="2" max="30" step="1" value="10"></div>
+              <div class="control"><label for="lab-ni"><span>Titik interior n_i</span><output id="lab-ni-out">99</output></label><input type="range" id="lab-ni" min="5" max="200" step="1" value="99"></div>
+              <div class="control"><label for="lab-alpha"><span>Bobot batas α</span><output id="lab-alpha-out">1</output></label><input type="range" id="lab-alpha" min="-1" max="2" step="0.1" value="0"></div>
+              <div class="control"><label for="lab-lr"><span>Learning rate</span><output id="lab-lr-out">0.010</output></label><input type="range" id="lab-lr" min="-3" max="-1.3" step="0.05" value="-2"></div>
+              <div class="control"><span class="control-label">Sampling titik</span><div class="seg" role="group" aria-label="Sampling" data-sampling><button type="button" data-v="random" aria-pressed="true">Acak</button><button type="button" data-v="grid" aria-pressed="false">Grid</button></div></div>
+              <label class="switch"><input type="checkbox" data-hard> Hard constraint \(u=x(1-x)N(x)\)</label>
+              <div class="btn-row mt-1">
+                <button class="btn btn--primary" type="button" data-run>▶ Latih</button>
+                <button class="btn btn--ghost btn--sm" type="button" data-step>+100 iterasi</button>
+                <button class="btn btn--ghost btn--sm" type="button" data-reset>Reset</button>
+              </div>
+              <p class="widget-hint">Mengubah pengaturan akan mereset jaringan.</p>
+            </div>
+            <div>
+              <div class="plot"><canvas aria-label="Solusi PINN dan solusi analitik"></canvas></div>
+              <div class="plot-legend"><span style="--c:var(--accent-3)">analitik</span><span style="--c:var(--accent)">PINN</span><span class="dot" style="--c:var(--pink)">titik kolokasi</span></div>
+              <div class="grid grid--2 mt-1" style="gap:12px">
+                <div><div class="plot plot--square"><canvas aria-label="Loss terhadap iterasi"></canvas></div><div class="plot-legend"><span style="--c:var(--accent)">loss (log)</span></div></div>
+                <div><div class="plot plot--square"><canvas aria-label="Galat absolut"></canvas></div><div class="plot-legend"><span style="--c:var(--pink)">|u_PINN − u_true|</span></div></div>
+              </div>
+              <div class="stats">
+                <div class="stat"><span>Iterasi</span><strong data-iter>0</strong></div>
+                <div class="stat"><span>Loss</span><strong data-loss>—</strong></div>
+                <div class="stat"><span>MSE_i</span><strong data-msei>—</strong></div>
+                <div class="stat"><span>MSE_b</span><strong data-mseb>—</strong></div>
+                <div class="stat"><span>Galat maks</span><strong data-err>—</strong></div>
+              </div>
+              <p class="widget-hint" data-msg aria-live="polite"></p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Detektif -->
+        <section class="card game-panel" id="detective" data-panel="detective" hidden aria-labelledby="det-title">
+          <h2 id="det-title">🔍 Detektif λ</h2>
+          <p class="text-muted">Persamaan tersangka: \(u_{xx}+\lambda_1e^{\lambda_2u/2}=0\), \(u(0)=u(1)=0\). Data \(\{x_k,u(x_k)\}\) diberikan. Geser \(\lambda_1,\lambda_2\) sampai residual fisika \(MSE_{de}\) nol, lalu kunci tebakan. 3 kasus per sesi, skor maksimal 1000 per kasus.</p>
+          <div class="game-hud">
+            <span class="hud-item">Kasus <strong data-round>1/3</strong></span>
+            <span class="hud-item">Skor <strong data-score>0</strong></span>
+            <span class="hud-item">MSE_de <strong data-mse>—</strong></span>
+            <label class="switch"><input type="checkbox" data-noise> Data ber-noise (lebih sulit)</label>
+          </div>
+          <div class="widget-grid">
+            <div>
+              <div class="control"><label for="det-l1"><span>λ₁</span><output id="det-l1-out">1.50</output></label><input type="range" id="det-l1" min="0.1" max="3" step="0.01" value="1.5"></div>
+              <div class="control"><label for="det-l2"><span>λ₂</span><output id="det-l2-out">1.50</output></label><input type="range" id="det-l2" min="0.1" max="4" step="0.01" value="1.5"></div>
+              <div class="btn-row">
+                <button class="btn btn--primary" type="button" data-lock>🔒 Kunci tebakan</button>
+                <button class="btn btn--ghost btn--sm" type="button" data-heat>Tampilkan peta loss (−100)</button>
+              </div>
+              <p class="widget-hint" data-msg aria-live="polite"></p>
+            </div>
+            <div>
+              <div class="grid grid--2" style="gap:12px">
+                <div><div class="plot plot--square"><canvas aria-label="Data observasi"></canvas></div><div class="plot-legend"><span class="dot" style="--c:var(--accent-3)">data u(x_k)</span></div></div>
+                <div><div class="plot plot--square"><canvas aria-label="Residual fisika"></canvas></div><div class="plot-legend"><span style="--c:var(--pink)">residual F_de</span></div></div>
+              </div>
+              <div class="plot plot--square mt-1" data-heat-wrap hidden><canvas aria-label="Peta log10 MSE_de terhadap lambda 1 dan lambda 2"></canvas></div>
+              <div class="plot-legend" data-heat-legend hidden><span>Peta log₁₀ MSE_de: gelap = kecil (baik). Sumbu-x λ₁, sumbu-y λ₂.</span><span class="dot" style="--c:var(--accent-3)">tebakanmu</span></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Match -->
+        <section class="card game-panel" id="match" data-panel="match" hidden aria-labelledby="match-title">
+          <h2 id="match-title">🧩 Pasangkan Istilah</h2>
+          <p class="text-muted">Klik sebuah istilah, lalu klik definisinya. Skor = 600 − 10×detik − 30×kesalahan (minimum 50).</p>
+          <div class="game-hud">
+            <span class="hud-item">Waktu <strong data-time>0</strong>s</span>
+            <span class="hud-item">Salah <strong data-miss>0</strong></span>
+            <span class="hud-item">Pasangan <strong data-pairs>0/6</strong></span>
+            <button class="btn btn--ghost btn--sm" type="button" data-new>Putaran baru</button>
+          </div>
+          <div class="match-board">
+            <div class="match-col" data-terms aria-label="Istilah"></div>
+            <div class="match-col" data-defs aria-label="Definisi"></div>
+          </div>
+        </section>
+
+        <!-- Kuis Galaksi -->
+        <section class="card game-panel" id="galaxy-quiz" data-panel="galaxy-quiz" hidden aria-labelledby="gq-title">
+          <h2 id="gq-title">🌌 Kuis Galaksi</h2>
+          <div class="quiz" data-timed-quiz></div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-about">
+        <a class="brand" href="index.html">
+          <svg class="brand-mark" viewBox="0 0 36 36" aria-hidden="true">
+            <path class="bm-edge" d="M7 11L18 6M7 11L18 18M7 11L18 30M7 25L18 6M7 25L18 18M7 25L18 30M18 6L29 18M18 18L29 18M18 30L29 18"/>
+            <circle class="bm-node bm-node--in" cx="7" cy="11" r="3.2"/><circle class="bm-node bm-node--in" cx="7" cy="25" r="3.2"/>
+            <circle class="bm-node" cx="18" cy="6" r="3.2"/><circle class="bm-node" cx="18" cy="18" r="3.2"/><circle class="bm-node" cx="18" cy="30" r="3.2"/>
+            <circle class="bm-node bm-node--out" cx="29" cy="18" r="3.8"/>
+          </svg>
+          <span class="brand-text">PINNsWEB</span>
+        </a>
+        <p>Media belajar interaktif <em>Mathematics Behind Physics-Informed Neural Networks</em> untuk mahasiswa dan dosen.</p>
+      </div>
+      <nav aria-label="Navigasi footer">
+        <h2>Jelajahi</h2>
+        <ul>
+          <li><a href="materi.html">Materi PINNs</a></li>
+          <li><a href="latihan.html">Latihan &amp; Kuis</a></li>
+          <li><a href="arena.html">Arena Game</a></li>
+          <li><a href="reference.html">Referensi &amp; Glosarium</a></li>
+        </ul>
+      </nav>
+      <div class="footer-credit">
+        <h2>Kredit</h2>
+        <dl>
+          <div><dt>Dosen / Pemateri</dt><dd>Muhammad Luthfi Shahab</dd></div>
+          <div><dt>Dibuat oleh</dt><dd><a href="mailto:zahraychana@gmail.com">zahraychana@gmail.com</a></dd></div>
+          <div><dt>Sumber materi</dt><dd>ILMS 2026 · 24 September 2026</dd></div>
+        </dl>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <span>© <span data-year>2026</span> PINNsWEB · by <a href="mailto:zahraychana@gmail.com">zahraychana@gmail.com</a></span>
+      <span>Dosen: Muhammad Luthfi Shahab</span>
+    </div>
+  </footer>
+
+  <button class="icon-btn back-to-top" type="button" aria-label="Kembali ke atas">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg>
+  </button>
+</body>
+</html>

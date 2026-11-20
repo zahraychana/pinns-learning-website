@@ -1,74 +1,63 @@
-# PINNs Learning Website
+# PINNsWEB: Mathematics Behind PINNs
 
-A simple static website for learning **Physics-Informed Neural Networks (PINNs)**, with study material, exercises, and references.
+Website belajar interaktif **Physics-Informed Neural Networks (PINNs)** untuk mahasiswa dan dosen,
+berdasarkan materi *Mathematics Behind PINNs* oleh **Muhammad Luthfi Shahab** (ILMS 2026).
 
-🌐 **Result:** (https://pinnsweb.infinityfree.io/)
+🌐 **Live:** https://pinnsweb.infinityfree.io/
 
-## Features
+## Fitur
 
-- **Study material**: PINNs explained step by step.
-- **Exercises**: practice problems with result images.
-- **References**: papers and sources for further reading.
-- **Responsive**: works on both desktop and mobile.
+- **Materi lengkap 4 modul**: Feedforward NN, Differential Equations, PINNs Forward, PINNs Inverse.
+  Setiap modul memiliki tujuan belajar, penjelasan mendalam, intuisi, contoh hitung, ringkasan, istilah kunci, dan kuis.
+- **9 simulasi interaktif**: fungsi komposit, fungsi aktivasi, forward pass, ukuran matriks, bifurkasi Bratu,
+  laboratorium FDM, titik kolokasi, chain rule vs beda hingga, dan residual inverse problem.
+- **6 mini game**: Fit the Wave, Gradient Descent Golf, PINN Lab (training PINN sungguhan di browser),
+  Detektif λ, Pasangkan Istilah, dan Kuis Galaksi.
+- **Latihan**: contoh kasus, kode MATLAB, grafik hasil, soal mandiri dengan pembahasan, dan kuis komprehensif (43 soal).
+- **Referensi & glosarium** yang bisa dicari.
+- Tema galaksi (navy–ungu) dengan **mode gelap/terang**, latar konstelasi jaringan saraf, responsif, dan aksesibel.
 
-## Topics
-
-1. Feedforward Neural Networks
-2. Differential Equations
-3. PINNs: Forward Problems
-4. PINNs: Inverse Problems
-
-## Pages
-
-| File | Description |
-|---|---|
-| `index.html` | Home page |
-| `materi.html` | Study material |
-| `latihan.html` | Exercises and results |
-| `reference.html` | References |
-
-## Project Structure
+## Struktur folder
 
 ```
-pinns-learning-website/
-├── index.html
-├── materi.html
-├── latihan.html
-├── reference.html
+PINNsWEB/
+├── index.html          Beranda
+├── materi.html         Materi 4 modul + simulasi
+├── latihan.html        Latihan, soal mandiri, kuis komprehensif
+├── arena.html          Mini game
+├── reference.html      Daftar pustaka, kode, glosarium
 ├── css/
-│   └── style.css
+│   └── style.css       Sistem desain (token warna, tema gelap/terang, komponen)
 ├── js/
-│   └── script.js
-└── assets/
-    └── images/
+│   ├── main.js         Tema, navigasi, latar jaringan, KaTeX, progres
+│   ├── plot.js         Plotter kanvas ringan
+│   ├── nn.js           Numerik: Bratu analitik, FDM-Newton, NN & PINN + Adam
+│   ├── materi.js       Simulasi & navigasi halaman materi
+│   ├── latihan.js      Tab latihan & lightbox
+│   ├── arena.js        Logika mini game
+│   ├── quiz.js         Mesin kuis
+│   ├── quiz-data.js    Bank soal
+│   ├── glossary-data.js Data glosarium
+│   └── reference.js    Pencarian glosarium
+├── assets/img/         Foto pemateri & grafik hasil (WebP)
+└── .github/workflows/deploy.yml   Auto-deploy ke InfinityFree via FTP
 ```
 
-## Tech Stack
-
-- HTML5
-- CSS3
-- JavaScript (vanilla, no frameworks)
-
-## Getting Started
-
-**Option 1:** Open `index.html` in your browser.
-
-**Option 2:** Run a local server:
+## Menjalankan secara lokal
 
 ```bash
-git clone https://github.com/zahraychana/pinns-learning-website.git
-cd pinns-learning-website
 python -m http.server 8000
 ```
 
-Then open http://localhost:8000.
+Buka http://localhost:8000.
 
-## Deploy with GitHub Pages
+## Deploy
 
-1. Go to **Settings → Pages**.
-2. Under **Source**, choose **Deploy from a branch**.
-3. Select branch `main` and folder `/ (root)`, then click **Save**.
+Setiap push ke branch `main` akan mengunggah website ke InfinityFree secara otomatis (lihat `.github/workflows/deploy.yml`).
 
-## License
+## Kredit
 
-This project is licensed under the [MIT License](LICENSE).
+- Materi & dosen: **Muhammad Luthfi Shahab**
+- Desain & pengembangan: **zahraychana@gmail.com**
+
+Lisensi: [MIT](LICENSE)
