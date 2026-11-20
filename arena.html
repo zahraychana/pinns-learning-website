@@ -123,11 +123,11 @@
       </div>
 
       <div class="game-stage" id="game-stage" aria-live="polite">
-        <p class="card text-center text-muted" data-empty>Pilih salah satu game di atas untuk mulai bermain. 🎮</p>
+        <p class="card text-center text-muted" data-empty>Pilih salah satu game di atas untuk mulai bermain. </p>
 
         <!-- Fit the Wave -->
         <section class="card game-panel" id="fitwave" data-panel="fitwave" hidden aria-labelledby="fitwave-title">
-          <h2 id="fitwave-title">🌊 Fit the Wave</h2>
+          <h2 id="fitwave-title">Fit the Wave</h2>
           <p class="text-muted">Jaringan: \(u(x)=\sum_{j=1}^{3} v_j\tanh(w_jx+b_j)+c\). Tugasmu: buat kurva ungu menempel pada titik target dengan memperkecil MSE. Bintang: ★ MSE &lt; 0.02, ★★ &lt; 0.005, ★★★ &lt; 0.001.</p>
           <div class="game-hud">
             <div class="seg" role="group" aria-label="Pilih level" data-levels></div>
@@ -138,7 +138,7 @@
             <div>
               <div data-sliders></div>
               <div class="btn-row mt-1">
-                <button class="btn btn--primary btn--sm" type="button" data-auto>⚡ Latih otomatis (Adam)</button>
+                <button class="btn btn--primary btn--sm" type="button" data-auto>Latih otomatis (Adam)</button>
                 <button class="btn btn--ghost btn--sm" type="button" data-random>Acak</button>
               </div>
             </div>
@@ -152,8 +152,8 @@
 
         <!-- Golf -->
         <section class="card game-panel" id="golf" data-panel="golf" hidden aria-labelledby="golf-title">
-          <h2 id="golf-title">⛳ Gradient Descent Golf</h2>
-          <p class="text-muted">Bola bergerak mengikuti \(w_{k+1}=w_k-\mu L'(w_k)\). Lubang (🏁) ada di minimum <strong>global</strong>. Masuk lubang jika \(|w-w^*|&lt;0.05\) dalam maksimal 40 langkah. Bintang: ★★★ ≤ 6 langkah, ★★ ≤ 15, ★ ≤ 40.</p>
+          <h2 id="golf-title">Gradient Descent Golf</h2>
+          <p class="text-muted">Bola bergerak mengikuti \(w_{k+1}=w_k-\mu L'(w_k)\). Lubang () ada di minimum <strong>global</strong>. Masuk lubang jika \(|w-w^*|&lt;0.05\) dalam maksimal 40 langkah. Bintang: ★★★ ≤ 6 langkah, ★★ ≤ 15, ★ ≤ 40.</p>
           <div class="game-hud">
             <div class="seg" role="group" aria-label="Pilih lapangan" data-levels></div>
             <span class="hud-item">Langkah <strong data-steps>0</strong></span>
@@ -164,7 +164,7 @@
             <div>
               <div class="control"><label for="golf-w0"><span>Titik awal w₀</span><output id="golf-w0-out">-3.00</output></label><input type="range" id="golf-w0" min="-4" max="5" step="0.05" value="-3"></div>
               <div class="control"><label for="golf-mu"><span>Learning rate μ</span><output id="golf-mu-out">0.100</output></label><input type="range" id="golf-mu" min="-3" max="0.3" step="0.01" value="-1"></div>
-              <div class="btn-row"><button class="btn btn--primary" type="button" data-swing>⛳ Pukul!</button><button class="btn btn--ghost btn--sm" type="button" data-reset>Reset</button></div>
+              <div class="btn-row"><button class="btn btn--primary" type="button" data-swing>Pukul!</button><button class="btn btn--ghost btn--sm" type="button" data-reset>Reset</button></div>
               <p class="widget-hint" data-msg></p>
             </div>
             <div>
@@ -176,7 +176,7 @@
 
         <!-- PINN Lab -->
         <section class="card game-panel" id="pinn-lab" data-panel="pinn-lab" hidden aria-labelledby="lab-title">
-          <h2 id="lab-title">🧪 PINN Lab: Bratu</h2>
+          <h2 id="lab-title">PINN Lab: Bratu</h2>
           <p class="text-muted">Model: \(u(x)=\sum_j v_j\tanh(w_jx+b_j)+c\) (soft) atau \(u=x(1-x)N(x)\) (hard). Loss \(=MSE_i+\alpha MSE_b\), dioptimasi dengan Adam. Turunan \(u_{xx}\) dan gradien terhadap semua bobot dihitung analitik dengan <em>chain rule</em>. Tantangan: capai <strong>galat maks &lt; 10⁻³</strong>.</p>
           <div class="widget-grid">
             <div>
@@ -188,7 +188,7 @@
               <div class="control"><span class="control-label">Sampling titik</span><div class="seg" role="group" aria-label="Sampling" data-sampling><button type="button" data-v="random" aria-pressed="true">Acak</button><button type="button" data-v="grid" aria-pressed="false">Grid</button></div></div>
               <label class="switch"><input type="checkbox" data-hard> Hard constraint \(u=x(1-x)N(x)\)</label>
               <div class="btn-row mt-1">
-                <button class="btn btn--primary" type="button" data-run>▶ Latih</button>
+                <button class="btn btn--primary" type="button" data-run>Latih</button>
                 <button class="btn btn--ghost btn--sm" type="button" data-step>+100 iterasi</button>
                 <button class="btn btn--ghost btn--sm" type="button" data-reset>Reset</button>
               </div>
@@ -215,7 +215,7 @@
 
         <!-- Detektif -->
         <section class="card game-panel" id="detective" data-panel="detective" hidden aria-labelledby="det-title">
-          <h2 id="det-title">🔍 Detektif λ</h2>
+          <h2 id="det-title">Detektif λ</h2>
           <p class="text-muted">Persamaan tersangka: \(u_{xx}+\lambda_1e^{\lambda_2u/2}=0\), \(u(0)=u(1)=0\). Data \(\{x_k,u(x_k)\}\) diberikan. Geser \(\lambda_1,\lambda_2\) sampai residual fisika \(MSE_{de}\) nol, lalu kunci tebakan. 3 kasus per sesi, skor maksimal 1000 per kasus.</p>
           <div class="game-hud">
             <span class="hud-item">Kasus <strong data-round>1/3</strong></span>
@@ -228,7 +228,7 @@
               <div class="control"><label for="det-l1"><span>λ₁</span><output id="det-l1-out">1.50</output></label><input type="range" id="det-l1" min="0.1" max="3" step="0.01" value="1.5"></div>
               <div class="control"><label for="det-l2"><span>λ₂</span><output id="det-l2-out">1.50</output></label><input type="range" id="det-l2" min="0.1" max="4" step="0.01" value="1.5"></div>
               <div class="btn-row">
-                <button class="btn btn--primary" type="button" data-lock>🔒 Kunci tebakan</button>
+                <button class="btn btn--primary" type="button" data-lock>Kunci tebakan</button>
                 <button class="btn btn--ghost btn--sm" type="button" data-heat>Tampilkan peta loss (−100)</button>
               </div>
               <p class="widget-hint" data-msg aria-live="polite"></p>
@@ -246,7 +246,7 @@
 
         <!-- Match -->
         <section class="card game-panel" id="match" data-panel="match" hidden aria-labelledby="match-title">
-          <h2 id="match-title">🧩 Pasangkan Istilah</h2>
+          <h2 id="match-title">Pasangkan Istilah</h2>
           <p class="text-muted">Klik sebuah istilah, lalu klik definisinya. Skor = 600 − 10×detik − 30×kesalahan (minimum 50).</p>
           <div class="game-hud">
             <span class="hud-item">Waktu <strong data-time>0</strong>s</span>
@@ -262,7 +262,7 @@
 
         <!-- Kuis Galaksi -->
         <section class="card game-panel" id="galaxy-quiz" data-panel="galaxy-quiz" hidden aria-labelledby="gq-title">
-          <h2 id="gq-title">🌌 Kuis Galaksi</h2>
+          <h2 id="gq-title">Kuis Galaksi</h2>
           <div class="quiz" data-timed-quiz></div>
         </section>
       </div>

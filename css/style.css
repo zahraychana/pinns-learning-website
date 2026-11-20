@@ -782,7 +782,7 @@ main { flex: 1; }
   color: #fff;
   background: var(--accent);
 }
-.callout--intuisi::before { content: "💡"; background: transparent; font-size: 1.15rem; }
+.callout--intuisi::before { content: ""; background: transparent; font-size: 1.15rem; }
 .callout--definisi { background: rgba(67, 56, 202, .1); border-color: rgba(99, 102, 241, .35); }
 .callout--definisi::before { content: "D"; background: var(--accent-2); }
 .callout--catatan { background: var(--warn-soft); border-color: rgba(217, 119, 6, .35); }
@@ -790,7 +790,7 @@ main { flex: 1; }
 .callout--contoh { background: var(--success-soft); border-color: rgba(16, 185, 129, .3); }
 .callout--contoh::before { content: "✓"; background: #059669; }
 .callout--pdf { background: transparent; border-style: dashed; }
-.callout--pdf::before { content: "📄"; background: transparent; font-size: 1.1rem; }
+.callout--pdf::before { content: ""; background: transparent; font-size: 1.1rem; }
 .callout--wawasan { background: rgba(192, 38, 211, .08); border-color: rgba(192, 38, 211, .3); }
 .callout--wawasan::before { content: "★"; background: var(--pink); }
 
@@ -1620,3 +1620,41 @@ details.reveal summary { padding: .5rem 1rem; }
 .stat { background: none; border: 0; border-left: 2px solid var(--accent); border-radius: 0; padding: .2rem .8rem; }
 .figure { background: none; border: 0; }
 .page-hero + .container .lesson:first-child { padding-top: 8px; }
+
+/* ==========================================================================
+   Catatan (callout) seragam: satu warna, tanpa ikon, bingkai gradien halus
+   ========================================================================== */
+.callout,
+.callout--definisi, .callout--catatan, .callout--contoh,
+.callout--pdf, .callout--wawasan, .callout--intuisi {
+  position: relative;
+  margin: 1.6rem 0;
+  padding: 1.4rem 1.5rem 1.2rem;
+  border: 1px solid transparent;
+  border-radius: 18px;
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--surface-solid) 88%, var(--accent)), var(--surface-solid)) padding-box,
+    linear-gradient(135deg, var(--accent), transparent 45%, transparent 60%, var(--accent-2)) border-box;
+  box-shadow: 0 14px 40px -28px rgba(76, 29, 149, .6);
+}
+.callout::before { content: none; display: none; }
+.callout::after {
+  content: "";
+  position: absolute;
+  top: -1px; left: 24px;
+  width: 64px; height: 3px;
+  border-radius: 0 0 4px 4px;
+  background: linear-gradient(90deg, var(--accent-2), var(--accent));
+}
+.callout-title {
+  display: block;
+  margin-bottom: .45rem;
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+@media (max-width: 560px) {
+  .callout { padding: 1.2rem 1.1rem 1rem; }
+}

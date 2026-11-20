@@ -123,7 +123,7 @@
     }
 
     let raf = 0;
-    function stop() { running = false; cancelAnimationFrame(raf); $("[data-auto]", panel).textContent = "⚡ Latih otomatis (Adam)"; }
+    function stop() { running = false; cancelAnimationFrame(raf); $("[data-auto]", panel).textContent = "Latih otomatis (Adam)"; }
     function autoTrain() {
       if (running) { stop(); return; }
       const L = LEVELS[level];
@@ -135,7 +135,7 @@
         autoNet.net.p.set(params);
       }
       running = true;
-      $("[data-auto]", panel).textContent = "⏸ Jeda";
+      $("[data-auto]", panel).textContent = "Jeda";
       const t0 = autoNet.iter;
       const loop = () => {
         if (!running) return;
@@ -308,7 +308,7 @@
         msg.innerHTML = `<span class="bad">Training divergen.</span> Turunkan learning rate lalu reset.`;
         stop();
       } else {
-        msg.textContent = model.iter === 0 ? "Tekan ▶ Latih. Solusi awal jaringan masih acak." : "Training berjalan… perhatikan loss turun dan kurva PINN mendekati solusi analitik.";
+        msg.textContent = model.iter === 0 ? "Tekan  Latih. Solusi awal jaringan masih acak." : "Training berjalan… perhatikan loss turun dan kurva PINN mendekati solusi analitik.";
       }
     }
 
@@ -316,12 +316,12 @@
       running = false;
       cancelAnimationFrame(raf);
       const b = $("[data-run]", panel);
-      if (b) b.textContent = "▶ Latih";
+      if (b) b.textContent = "Latih";
     }
     function run() {
       if (running) { stop(); return; }
       running = true;
-      $("[data-run]", panel).textContent = "⏸ Jeda";
+      $("[data-run]", panel).textContent = "Jeda";
       let batch = 20;
       const loop = () => {
         if (!running) return;
@@ -369,7 +369,7 @@
       usedHeat = false;
       $("[data-heat-wrap]", panel).hidden = true;
       $("[data-heat-legend]", panel).hidden = true;
-      $("[data-lock]", panel).textContent = "🔒 Kunci tebakan";
+      $("[data-lock]", panel).textContent = "Kunci tebakan";
       $("[data-heat]", panel).disabled = false;
       $("[data-round]", panel).textContent = `${round + 1}/3`;
       $("[data-msg]", panel).textContent = "Amati residual: garis merah muda harus rata di nol.";
@@ -424,7 +424,7 @@
       const pts = Math.max(0, Math.round(1000 * (1 - err * 2.5)) - (usedHeat ? 100 : 0));
       score += pts;
       $("[data-score]", panel).textContent = score;
-      $("[data-msg]", panel).innerHTML = `Jawaban: λ₁ = <strong>${a}</strong>, λ₂ = <strong>${b}</strong>. Tebakanmu (${g1.toFixed(2)}, ${g2.toFixed(2)}) → <span class="${pts > 700 ? "ok" : "bad"}">+${pts} poin</span>. Titik kuning di peta adalah jawaban benar.`;
+      $("[data-msg]", panel).innerHTML = `Jawaban: λ₁ = <strong>${a}</strong>, λ₂ = <strong>${b}</strong>. Tebakanmu (${g1.toFixed(2)}, ${g2.toFixed(2)}) → <span class="${pts >700 ? "ok" : "bad"}">+${pts} poin</span>. Titik kuning di peta adalah jawaban benar.`;
       $("[data-lock]", panel).textContent = round < 2 ? "Kasus berikutnya →" : "Lihat skor akhir";
       $("[data-heat]", panel).disabled = true;
       showHeat();
@@ -433,7 +433,7 @@
       const best = Math.max(P().store.get("detective", 0), score);
       P().store.set("detective", best);
       updateBest();
-      $("[data-msg]", panel).innerHTML = `<strong>Sesi selesai! Skor: ${score}/3000.</strong> Rekor: ${best}. ${score > 2400 ? "Insting inverse problem-mu tajam! 🕵️" : "Tip: atur λ₁ dulu sampai residual dekat x=0 dan x=1 nol, lalu λ₂ untuk bagian tengah."} <button class="btn btn--ghost btn--sm" type="button" data-again>Main lagi</button>`;
+      $("[data-msg]", panel).innerHTML = `<strong>Sesi selesai! Skor: ${score}/3000.</strong> Rekor: ${best}. ${score > 2400 ? "Insting inverse problem-mu tajam! " : "Tip: atur λ₁ dulu sampai residual dekat x=0 dan x=1 nol, lalu λ₂ untuk bagian tengah."} <button class="btn btn--ghost btn--sm" type="button" data-again>Main lagi</button>`;
       if (score > 2400) P().confetti();
       $("[data-again]", panel).addEventListener("click", start);
       $("[data-lock]", panel).disabled = true;
@@ -512,7 +512,7 @@
   /* ============================ Kuis Galaksi ============================ */
   function gameGalaxyQuiz(panel) {
     const root = $("[data-timed-quiz]", panel);
-    root.innerHTML = `<p>10 soal acak dari semua modul. Setiap soal 20 detik, 3 nyawa. Poin = 100 + 10×sisa detik + bonus <em>streak</em>.</p><button class="btn btn--primary" type="button">🚀 Mulai</button>`;
+    root.innerHTML = `<p>10 soal acak dari semua modul. Setiap soal 20 detik, 3 nyawa. Poin = 100 + 10×sisa detik + bonus <em>streak</em>.</p><button class="btn btn--primary" type="button"> Mulai</button>`;
     let quiz = null;
     $("button", root).addEventListener("click", () => {
       quiz = new (P().Quiz)(root, { module: "all", count: 10, timed: true, seconds: 20, lives: 3, storeKey: "galaxy-quiz", onFinish: updateBest });
@@ -530,12 +530,12 @@
     const golf = Object.values(s.get("golf", {})).reduce((a, b) => a + b, 0);
     const lab = s.get("pinn-lab", null);
     const labels = {
-      fitwave: fw ? `🏆 ${fw}/12 bintang` : "",
-      golf: golf ? `🏆 ${golf}/9 bintang` : "",
-      "pinn-lab": lab ? `🏆 Tantangan selesai dalam ${lab} iterasi` : "",
-      detective: s.get("detective", 0) ? `🏆 Rekor ${s.get("detective", 0)}/3000` : "",
-      match: s.get("match", 0) ? `🏆 Rekor ${s.get("match", 0)} poin` : "",
-      "galaxy-quiz": s.get("galaxy-quiz", 0) ? `🏆 Rekor ${s.get("galaxy-quiz", 0)} poin` : ""
+      fitwave: fw ? ` ${fw}/12 bintang` : "",
+      golf: golf ? ` ${golf}/9 bintang` : "",
+      "pinn-lab": lab ? `Tantangan selesai dalam ${lab} iterasi` : "",
+      detective: s.get("detective", 0) ? `Rekor ${s.get("detective", 0)}/3000` : "",
+      match: s.get("match", 0) ? `Rekor ${s.get("match", 0)} poin` : "",
+      "galaxy-quiz": s.get("galaxy-quiz", 0) ? `Rekor ${s.get("galaxy-quiz", 0)} poin` : ""
     };
     Object.entries(labels).forEach(([k, v]) => { const el = $(`[data-best="${k}"]`); if (el) el.textContent = v; });
   }

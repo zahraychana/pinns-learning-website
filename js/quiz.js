@@ -75,9 +75,9 @@
       prog.append(bar);
       top.append(prog);
       if (this.opts.timed) {
-        this.hudTime = el("span", "hud-item", `⏱ <strong>${this.opts.seconds}</strong>s`);
-        const hearts = "❤".repeat(this.lives) + "<span class='text-muted'>" + "♡".repeat(Math.max(0, this.opts.lives - this.lives)) + "</span>";
-        top.append(this.hudTime, el("span", "hud-item", hearts), el("span", "hud-item", `⭐ <strong>${this.points}</strong>`));
+        this.hudTime = el("span", "hud-item", `Waktu <strong>${this.opts.seconds}</strong>s`);
+        const hearts = `Nyawa <strong>${this.lives}</strong>`;
+        top.append(this.hudTime, el("span", "hud-item", hearts), el("span", "hud-item", `Poin <strong>${this.points}</strong>`));
       } else {
         top.append(el("span", "hud-item", `Benar: <strong>${this.score}</strong>`));
       }
@@ -108,7 +108,7 @@
         this.timeLeft = this.opts.seconds;
         this.timer = setInterval(() => {
           this.timeLeft--;
-          if (this.hudTime) this.hudTime.innerHTML = `⏱ <strong>${this.timeLeft}</strong>s`;
+          if (this.hudTime) this.hudTime.innerHTML = `Waktu <strong>${this.timeLeft}</strong>s`;
           if (this.timeLeft <= 0) this.answer(-1);
         }, 1000);
       }
@@ -136,7 +136,7 @@
       }
       this.answers.push({ q, pos, correct });
 
-      const title = correct ? "✅ Benar!" : pos === -1 ? "⏰ Waktu habis" : "❌ Kurang tepat";
+      const title = correct ? "Benar!" : pos === -1 ? "Waktu habis" : "Kurang tepat";
       this.feedback.className = "quiz-feedback " + (correct ? "is-correct" : "is-wrong");
       this.feedback.innerHTML = `<strong>${title}</strong>${q.e}`;
 
@@ -166,7 +166,7 @@
       }
 
       const msg =
-        pct >= 90 ? "Luar biasa! Pemahamanmu sudah sangat kuat. 🚀" :
+        pct >= 90 ? "Luar biasa! Pemahamanmu sudah sangat kuat. " :
         pct >= 70 ? "Bagus! Tinggal sedikit lagi untuk sempurna." :
         pct >= 50 ? "Lumayan. Ulas kembali bagian yang masih salah." :
         "Jangan menyerah! Baca ulang materinya lalu coba lagi.";
@@ -182,7 +182,7 @@
         res.append(el("p", "text-muted", `${this.score} dari ${total} jawaban benar`));
       }
       res.append(el("p", "", msg));
-      if (best !== null) res.append(el("p", "game-best", `Rekor terbaikmu: ${best}${this.opts.timed ? " poin" : ""}`));
+      if (best !== null) res.append(el("p", "game-best", `Rekor terbaikmu: ${best}${this.opts.timed ? "poin" : ""}`));
 
       const wrong = this.answers.filter((a) => !a.correct);
       if (wrong.length) {

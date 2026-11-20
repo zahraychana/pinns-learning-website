@@ -75,7 +75,7 @@
         <p>
           Materi disusun dari slide ILMS 2026 dan diperluas dengan penjelasan, intuisi, contoh hitung, serta simulasi.
           Istilah teknis tetap ditulis dalam bahasa Inggris (dicetak <em class="term">miring</em>) agar konsisten dengan literatur.
-          Kotak bertanda 📄 menandai poin yang langsung berasal dari slide, sedangkan kotak ★ berisi wawasan tambahan.
+          Catatan berlabel <em>Dari slide</em> berasal langsung dari slide, sedangkan <em>Wawasan tambahan</em> berisi pengayaan.
         </p>
       </div>
     </section>
@@ -212,7 +212,7 @@
               \(\dfrac{d}{dx} f(g(x)) = f'(g(x))\, g'(x)\). Rumus inilah yang nanti dipakai untuk menghitung \(u_x\) dan \(u_{xx}\) pada PINNs.
             </div>
             <div class="widget" data-widget="composite">
-              <div class="widget-head"><h4>🧪 Simulasi 1 — Mesin fungsi komposit</h4><span class="badge">Interaktif</span></div>
+              <div class="widget-head"><h4>Simulasi 1 — Mesin fungsi komposit</h4><span class="badge">Interaktif</span></div>
               <div class="widget-body"></div>
             </div>
           </article>
@@ -267,7 +267,7 @@
               \(\sigma''\) pada simulasi berikut.
             </div>
             <div class="widget" data-widget="activation">
-              <div class="widget-head"><h4>🧪 Simulasi 2 — Penjelajah fungsi aktivasi</h4><span class="badge">Interaktif</span></div>
+              <div class="widget-head"><h4>Simulasi 2 — Penjelajah fungsi aktivasi</h4><span class="badge">Interaktif</span></div>
               <div class="widget-body"></div>
             </div>
           </article>
@@ -286,7 +286,7 @@
               Masukkan angka-angka ini ke simulasi di bawah untuk mengecek.
             </div>
             <div class="widget" data-widget="forward">
-              <div class="widget-head"><h4>🧪 Simulasi 3 — Kalkulator forward pass (2 → 2 → 1)</h4><span class="badge">Interaktif</span></div>
+              <div class="widget-head"><h4>Simulasi 3 — Kalkulator forward pass (2 → 2 → 1)</h4><span class="badge">Interaktif</span></div>
               <div class="widget-body"></div>
             </div>
           </article>
@@ -335,7 +335,7 @@
             </div>
             <p class="mt-1">Total parameter: \((2\cdot20+20) + 3(20\cdot20+20) + (20\cdot1+1) = 60 + 1260 + 21 = \mathbf{1341}\). Hitung untuk arsitektur lain dengan simulasi berikut.</p>
             <div class="widget" data-widget="params">
-              <div class="widget-head"><h4>🧪 Simulasi 4 — Penghitung ukuran matriks &amp; parameter</h4><span class="badge">Interaktif</span></div>
+              <div class="widget-head"><h4>Simulasi 4 — Penghitung ukuran matriks &amp; parameter</h4><span class="badge">Interaktif</span></div>
               <div class="widget-body"></div>
             </div>
             <div class="callout callout--catatan">
@@ -382,7 +382,7 @@
               <li>composite function</li><li>activation function</li><li>weight</li><li>bias</li><li>trainable parameters</li><li>MLP</li><li>fully connected</li><li>forward pass</li><li>MSE</li><li>gradient descent</li><li>learning rate</li><li>BFGS</li>
             </ul>
             <div class="widget" data-quiz-block="modul-1" data-count="5">
-              <div class="widget-head"><h4>📝 Kuis cepat Modul 1</h4><span class="badge">5 soal</span></div>
+              <div class="widget-head"><h4>Kuis cepat Modul 1</h4><span class="badge">5 soal</span></div>
               <div class="widget-body"><div class="quiz" data-quiz="modul-1" data-count="5"></div></div>
             </div>
           </article>
@@ -481,7 +481,7 @@
               (lihat referensi Shahab &amp; Susanto, 2024). Jelajahi sendiri di bawah.
             </div>
             <div class="widget" data-widget="bratu">
-              <div class="widget-head"><h4>🧪 Simulasi 5 — Penjelajah solusi Bratu &amp; bifurkasi</h4><span class="badge">Interaktif</span></div>
+              <div class="widget-head"><h4>Simulasi 5 — Penjelajah solusi Bratu &amp; bifurkasi</h4><span class="badge">Interaktif</span></div>
               <div class="widget-body"></div>
             </div>
           </article>
@@ -509,7 +509,7 @@
             <p>dengan \(J = \partial F/\partial u\) (matriks Jacobian). Jika \(\mu\) besar, LM berperilaku seperti <em>gradient descent</em> (aman tetapi lambat). Jika \(\mu\to 0\), LM menjadi <em>Gauss–Newton/Newton</em> (sangat cepat di dekat solusi). \(\mu\) diatur otomatis: diperkecil bila langkah berhasil, diperbesar bila gagal. Untuk Bratu, Jacobian-nya <strong>tridiagonal</strong>:</p>
             <div class="math-block">\[ \frac{\partial F_k}{\partial u_{k-1}} = \frac{\partial F_k}{\partial u_{k+1}} = \frac{1}{h^2}, \qquad \frac{\partial F_k}{\partial u_k} = -\frac{2}{h^2} + Ce^{u_k}. \]</div>
             <div class="widget" data-widget="fdm">
-              <div class="widget-head"><h4>🧪 Simulasi 6 — Laboratorium FDM untuk Bratu</h4><span class="badge">Perhitungan nyata</span></div>
+              <div class="widget-head"><h4>Simulasi 6 — Laboratorium FDM untuk Bratu</h4><span class="badge">Perhitungan nyata</span></div>
               <div class="widget-body"></div>
             </div>
             <div class="callout callout--pdf">
@@ -532,7 +532,7 @@
               <li>ODE</li><li>PDE</li><li>boundary condition</li><li>initial condition</li><li>Bratu equation</li><li>Burgers equation</li><li>finite difference</li><li>finite element</li><li>spectral method</li><li>Runge–Kutta</li><li>Jacobian</li><li>Levenberg–Marquardt</li>
             </ul>
             <div class="widget" data-quiz-block="modul-2">
-              <div class="widget-head"><h4>📝 Kuis cepat Modul 2</h4><span class="badge">5 soal</span></div>
+              <div class="widget-head"><h4>Kuis cepat Modul 2</h4><span class="badge">5 soal</span></div>
               <div class="widget-body"><div class="quiz" data-quiz="modul-2" data-count="5"></div></div>
             </div>
           </article>
@@ -594,7 +594,7 @@
               Di sini \(u_{true}\) pada titik batas/awal sudah diketahui: \(-\sin(\pi x)\) saat \(t=0\) dan \(0\) di \(x=\pm1\).
             </div>
             <div class="widget" data-widget="collocation">
-              <div class="widget-head"><h4>🧪 Simulasi 7 — Titik kolokasi domain Burgers</h4><span class="badge">Interaktif</span></div>
+              <div class="widget-head"><h4>Simulasi 7 — Titik kolokasi domain Burgers</h4><span class="badge">Interaktif</span></div>
               <div class="widget-body"></div>
             </div>
           </article>
@@ -631,7 +631,7 @@
               <em>chain rule</em> ini dengan aproksimasi beda hingga.
             </div>
             <div class="widget" data-widget="chainrule">
-              <div class="widget-head"><h4>🧪 Simulasi 8 — Chain rule vs beda hingga</h4><span class="badge">Perhitungan nyata</span></div>
+              <div class="widget-head"><h4>Simulasi 8 — Chain rule vs beda hingga</h4><span class="badge">Perhitungan nyata</span></div>
               <div class="widget-body"></div>
             </div>
           </article>
@@ -719,7 +719,7 @@
               <li>collocation points</li><li>PDE residual</li><li>MSE_i</li><li>MSE_b</li><li>automatic differentiation</li><li>chain rule</li><li>Hadamard product</li><li>soft constraint</li><li>hard constraint</li><li>mesh-free</li>
             </ul>
             <div class="widget" data-quiz-block="modul-3">
-              <div class="widget-head"><h4>📝 Kuis cepat Modul 3</h4><span class="badge">5 soal</span></div>
+              <div class="widget-head"><h4>Kuis cepat Modul 3</h4><span class="badge">5 soal</span></div>
               <div class="widget-body"><div class="quiz" data-quiz="modul-3" data-count="5"></div></div>
             </div>
           </article>
@@ -795,7 +795,7 @@
               Rasakan sendiri di simulasi berikut dan di game <a href="arena.html#detective">Detektif λ</a>.
             </div>
             <div class="widget" data-widget="inverse">
-              <div class="widget-head"><h4>🧪 Simulasi 9 — Residual fisika untuk tebakan λ</h4><span class="badge">Interaktif</span></div>
+              <div class="widget-head"><h4>Simulasi 9 — Residual fisika untuk tebakan λ</h4><span class="badge">Interaktif</span></div>
               <div class="widget-body"></div>
             </div>
           </article>
@@ -840,7 +840,7 @@
               <li>inverse problem</li><li>parameter estimation</li><li>observation data</li><li>MSE_de</li><li>MSE_data</li><li>least squares</li><li>Jacobian</li><li>Levenberg–Marquardt</li>
             </ul>
             <div class="widget" data-quiz-block="modul-4">
-              <div class="widget-head"><h4>📝 Kuis cepat Modul 4</h4><span class="badge">5 soal</span></div>
+              <div class="widget-head"><h4>Kuis cepat Modul 4</h4><span class="badge">5 soal</span></div>
               <div class="widget-body"><div class="quiz" data-quiz="modul-4" data-count="5"></div></div>
             </div>
           </article>

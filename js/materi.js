@@ -572,7 +572,7 @@
       store.set("modules-done", done);
       update();
       if (done[m]) {
-        P().toast("Progres tersimpan. Lanjut ke modul berikutnya! 🎉");
+        P().toast("Progres tersimpan. Lanjut ke modul berikutnya! ");
         if (Object.values(done).filter(Boolean).length === 4) P().confetti();
       }
     }));
