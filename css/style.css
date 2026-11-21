@@ -1658,3 +1658,89 @@ details.reveal summary { padding: .5rem 1rem; }
 @media (max-width: 560px) {
   .callout { padding: 1.2rem 1.1rem 1rem; }
 }
+
+/* ==========================================================================
+   Perbaikan tampilan mobile
+   ========================================================================== */
+/* Grid tidak boleh melebar mengikuti konten panjang (rumus, tabel) */
+.learn-layout > *, .widget-grid > *, .hero-grid > *, .grid > *, .footer-grid > * { min-width: 0; }
+.katex-display { overflow-x: auto; overflow-y: hidden; padding: 2px 0; }
+
+@media (max-width: 1024px) {
+  .learn-layout { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+  .toc { border-left: 0; padding: 0; margin-bottom: 8px; }
+  .toc-toggle { width: 100%; justify-content: center; margin-top: 10px; }
+}
+@media (max-width: 860px) {
+  .widget-grid, .grid--2, .grid--3, .hero-grid { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* Peta belajar: tanpa penanda daftar bawaan */
+.roadmap { list-style: none; padding: 0; margin: 0; }
+.roadmap > li { margin: 0; }
+.roadmap > li::marker { content: none; }
+
+/* Judul subbab: nomor sebaris dengan teks, tidak dipecah kolom */
+.lesson h3 { display: block; }
+.lesson h3 .num { display: inline-block; margin-right: .5rem; vertical-align: .1em; }
+
+@media (max-width: 560px) {
+  /* Peta belajar menjadi timeline vertikal */
+  .roadmap { gap: 0; position: relative; }
+  .roadmap::before {
+    display: block;
+    top: 24px; bottom: 24px; left: 23px; right: auto;
+    width: 2px; height: auto;
+    background: linear-gradient(180deg, var(--accent-3), var(--accent), var(--pink));
+  }
+  .roadmap-step { text-align: left; }
+  .roadmap-step a { display: grid; grid-template-columns: 48px 1fr; column-gap: 16px; padding: 10px 0; }
+  .roadmap-num { width: 48px; height: 48px; font-size: 1rem; margin: 0; grid-row: span 3; }
+  .roadmap-step h3 { margin: .2rem 0 .2rem; font-size: 1rem; }
+  .roadmap-step p { margin: 0; max-width: none; font-size: .88rem; }
+
+  /* Tab latihan: satu baris yang bisa digeser */
+  .tabs {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    margin: 0 -16px 20px;
+    padding: 4px 16px 8px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab { flex: none; padding: .5rem .9rem; font-size: .84rem; }
+
+  /* Kartu game ringkas */
+  .game-grid { gap: 12px; }
+  .game-card { padding: 16px 18px; display: grid; grid-template-columns: 28px 1fr; column-gap: 12px; align-items: start; }
+  .game-card .feature-icon { margin: 2px 0 0; grid-row: span 3; }
+  .game-card .feature-icon svg { width: 24px; height: 24px; }
+  .game-card h3 { margin: 0 0 .2rem; font-size: 1rem; }
+  .game-card p { font-size: .86rem; margin: 0; line-height: 1.6; }
+  .game-card .game-meta, .game-card .game-best { grid-column: 2; }
+  .game-card .game-meta { margin-top: .5rem; }
+
+  /* Simulasi & rumus */
+  .widget-head .badge { display: none; }
+  .widget-head { padding: .75rem 1rem; }
+  .widget-body { padding: 1rem; }
+  .math-block .katex-display > .katex, .katex-display > .katex { font-size: .92em; }
+  .lesson { padding: 28px 0; }
+  .lesson h3 { font-size: 1.08rem; }
+  .module-header { padding-left: 20px; }
+  .module-goals { grid-template-columns: 1fr; }
+
+  /* Beranda */
+  .hero { padding: 36px 0 32px; }
+  .hero h1 { font-size: 1.95rem; }
+  .hero .btn-row { flex-direction: column; align-items: stretch; max-width: 280px; margin-inline: auto; }
+  body[data-page="beranda"] .grid--3 { gap: 28px; }
+
+  /* Footer */
+  .footer-grid { padding: 36px 16px 20px; }
+  .footer-bottom { flex-direction: column; gap: 4px; text-align: center; padding: 16px; }
+}
+
+/* Kunci lebar halaman: tidak ada geser horizontal di HP (aman untuk header sticky) */
+html, body { overflow-x: clip; max-width: 100%; }
