@@ -1744,3 +1744,15 @@ details.reveal summary { padding: .5rem 1rem; }
 
 /* Kunci lebar halaman: tidak ada geser horizontal di HP (aman untuk header sticky) */
 html, body { overflow-x: clip; max-width: 100%; }
+
+/* KaTeX menyimpan teks MathML tersembunyi dengan position:absolute; tanpa ini
+   elemen itu bisa "lolos" dari wadah yang bisa digeser dan melebarkan halaman. */
+.katex, .table-wrap, .math-block, .katex-display, .calc-out { position: relative; }
+
+/* Area aman iPhone (bilah alamat & home indicator di bawah, notch di atas) */
+.site-header { padding-top: env(safe-area-inset-top); height: calc(var(--header-h) + env(safe-area-inset-top)); }
+.footer-bottom { padding-bottom: calc(26px + env(safe-area-inset-bottom)); }
+.back-to-top { bottom: calc(20px + env(safe-area-inset-bottom)); }
+@media (max-width: 560px) {
+  .footer-bottom { padding-bottom: calc(28px + env(safe-area-inset-bottom)); }
+}

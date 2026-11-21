@@ -1,0 +1,10 @@
+# HTML selalu dicek ulang agar perubahan langsung terlihat;
+# CSS/JS memakai nomor versi (?v=...) sehingga aman di-cache.
+<IfModule mod_headers.c>
+  <FilesMatch "\.html$">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+  <FilesMatch "\.(css|js)$">
+    Header set Cache-Control "public, max-age=604800"
+  </FilesMatch>
+</IfModule>
