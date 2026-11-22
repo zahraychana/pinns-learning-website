@@ -278,7 +278,88 @@
       throwOnError: false,
       ignoredTags: ["script", "noscript", "style", "textarea", "pre", "code", "option"]
     });
+    protectFromTranslate(scope);
     return true;
+  }
+
+  /* ---------- Bahasa: Indonesia / English (mesin Google Translate) ----------
+     Status bahasa disimpan di cookie "googtrans" (dibaca langsung oleh Google),
+     sehingga terjemahan ikut terbawa saat berpindah halaman. Skrip Google hanya
+     dimuat ketika bahasa Inggris dipilih. */
+  const NO_TRANSLATE = ".katex, .katex-display, pre, code, kbd, .brand-text, .lang-toggle";
+
+  function protectFromTranslate(scope = document) {
+    scope.querySelectorAll(NO_TRANSLATE).forEach((el) => {
+      el.classList.add("notranslate");
+      el.setAttribute("translate", "no");
+    });
+  }
+
+  function currentLang() {
+    return /(?:^|;\s*)googtrans=\/id\/en(?:;|$)/.test(document.cookie) ? "en" : "id";
+  }
+
+  function setLangCookie(lang) {
+    const value = lang === "en" ? "/id/en" : "";
+    const tail = lang === "en" ? "; path=/" : "; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    // Google bisa menyimpan cookie di host maupun domain induknya: tangani semuanya.
+    const parts = location.hostname.split(".");
+    const domains = [""];
+    for (let i = 0; i < parts.length - 1; i++) domains.push(parts.slice(i).join("."));
+    domains.forEach((d) => {
+      const domain = d ? "; domain=" + d : "";
+      document.cookie = "googtrans=" + value + tail + domain;
+      if (d) document.cookie = "googtrans=" + value + tail + "; domain=." + d;
+    });
+  }
+
+  let gtLoading = false;
+  function loadTranslator() {
+    if (gtLoading || window.google?.translate?.TranslateElement) return;
+    gtLoading = true;
+    const host = document.createElement("div");
+    host.id = "gt-host";
+    host.hidden = true;
+    document.body.appendChild(host);
+    window.pinnsTranslateInit = () => {
+      new window.google.translate.TranslateElement(
+        { pageLanguage: "id", includedLanguages: "en", autoDisplay: false },
+        "gt-host"
+      );
+    };
+    const s = document.createElement("script");
+    s.src = "https://translate.google.com/translate_a/element.js?cb=pinnsTranslateInit";
+    s.async = true;
+    s.onerror = () => {
+      gtLoading = false;
+      setLangCookie("id");
+      applyLangButton("id");
+      toast("Terjemahan gagal dimuat. Periksa koneksi internet.");
+    };
+    document.head.appendChild(s);
+  }
+
+  function applyLangButton(lang) {
+    document.querySelectorAll(".lang-toggle").forEach((btn) => {
+      btn.textContent = lang === "en" ? "EN" : "ID";
+      btn.setAttribute("aria-label", lang === "en" ? "Ganti ke Bahasa Indonesia" : "Translate to English");
+      btn.title = lang === "en" ? "Bahasa Indonesia" : "English";
+    });
+  }
+
+  function initLang() {
+    protectFromTranslate();
+    const lang = currentLang();
+    applyLangButton(lang);
+    if (lang === "en") loadTranslator();
+    document.querySelectorAll(".lang-toggle").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        // Google paling andal membaca cookie saat halaman dimuat: simpan pilihan lalu muat ulang.
+        setLangCookie(currentLang() === "en" ? "id" : "en");
+        btn.disabled = true;
+        location.reload();
+      });
+    });
   }
 
   function initMath() {
@@ -341,6 +422,7 @@
 
   document.addEventListener("DOMContentLoaded", () => {
     initTheme();
+    initLang();
     initNav();
     initNetworkBackground();
     initReveal();

@@ -320,6 +320,31 @@ hr { border: 0; border-top: 1px solid var(--border); margin: 2rem 0; }
 
 .nav-toggle { display: none; }
 
+/* Tombol bahasa ID / EN */
+.lang-toggle {
+  font-family: var(--font-display);
+  font-size: .8rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+}
+
+/* Google Translate: sembunyikan banner, tooltip, dan sorotan bawaannya */
+body { top: 0 !important; }
+#gt-host,
+iframe.skiptranslate,
+.goog-te-banner-frame,
+.goog-te-balloon-frame,
+#goog-gt-tt,
+.goog-tooltip,
+.VIpgJd-ZVi9od-ORHb-OEVmcd,
+.VIpgJd-ZVi9od-aZ2wEe-wOHMyf,
+.VIpgJd-ZVi9od-aZ2wEe-OiiCO,
+.VIpgJd-yAWNEb-L7lbkb { display: none !important; }
+.goog-text-highlight,
+.VIpgJd-yAWNEb-VIpgJd-fmcmS-sn54Q { background: none !important; box-shadow: none !important; }
+/* Google memangkas spasi di sekitar rumus inline: beri jarak saat diterjemahkan */
+.translated-ltr :not(.katex-display) > .katex { margin-inline: .25em; }
+
 /* 5. Tata letak & komponen umum ------------------------------------------ */
 main { flex: 1; }
 .container {
@@ -330,29 +355,6 @@ main { flex: 1; }
 }
 .section { padding: clamp(56px, 8vw, 96px) 0; }
 .section--tight { padding: 40px 0; }
-
-.eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: .8rem;
-  padding: .3rem .8rem;
-  border-radius: 999px;
-  border: 1px solid var(--border-strong);
-  background: var(--accent-soft);
-  color: var(--accent);
-  font-size: .78rem;
-  font-weight: 700;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-}
-.eyebrow::before {
-  content: "";
-  width: 7px; height: 7px;
-  border-radius: 50%;
-  background: currentColor;
-  box-shadow: 0 0 10px currentColor;
-}
 
 .section-head { max-width: 760px; margin-bottom: 2.4rem; }
 .section-head p { color: var(--muted); font-size: 1.05rem; }
@@ -1378,6 +1380,7 @@ select:focus, input:focus { outline: 2px solid var(--accent); outline-offset: 1p
 @media (max-width: 560px) {
   body { font-size: 16px; }
   .container, .header-inner { padding: 0 16px; }
+  .header-inner { gap: 10px; }
   .game-grid, .grid--4, .roadmap, .match-board { grid-template-columns: 1fr; }
   .brand small { display: none; }
   .callout { padding-left: 1rem; padding-top: 2.6rem; }

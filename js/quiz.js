@@ -173,7 +173,6 @@
 
       this.root.innerHTML = "";
       const res = el("div", "quiz-result");
-      res.append(el("span", "eyebrow", this.opts.timed ? "Kuis selesai" : "Hasil kuis"));
       if (this.opts.timed) {
         res.append(el("div", "quiz-score gradient-text", String(this.points)));
         res.append(el("p", "text-muted", `poin · ${this.score}/${answered} benar · streak terbaik ${this.bestStreak}` + (this.lives <= 0 ? " · nyawa habis" : "")));

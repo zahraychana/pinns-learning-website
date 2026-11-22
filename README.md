@@ -15,6 +15,7 @@ berdasarkan materi *Mathematics Behind PINNs* oleh **Muhammad Luthfi Shahab** (I
   Detektif λ, Pasangkan Istilah, dan Kuis Galaksi.
 - **Latihan**: contoh kasus, kode MATLAB, grafik hasil, soal mandiri dengan pembahasan, dan kuis komprehensif (43 soal).
 - **Referensi & glosarium** yang bisa dicari.
+- **Tombol bahasa ID/EN** di header (terjemahan otomatis Google; rumus & kode tidak ikut diterjemahkan).
 - Tema galaksi (navy–ungu) dengan **mode gelap/terang**, latar konstelasi jaringan saraf, responsif, dan aksesibel.
 
 ## Struktur folder
